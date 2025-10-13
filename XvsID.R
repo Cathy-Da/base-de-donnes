@@ -1,31 +1,45 @@
-# Charger la base en forçant UTF-8
-data <- read.csv(
-  "nasa_disaster_correction.csv",
-  stringsAsFactors = FALSE,
-  check.names = FALSE,
-  fileEncoding = "UTF-8"
-)
+# --- XvsID.R (forcer la colonne sans nom -> id, supprimer l'ancienne id) ---
 
-# Vérification : il faut bien une colonne "X"
-if (!"X" %in% names(data)) stop("ECHEC : colonne 'X' absente, rien à renommer.")
+INFILE  <- "nasa_disaster_correction.csv"
+OUTFILE <- "nasa_disaster_correction.csv"
 
-# Étape 1 : renommer X -> id_unique
-names(data)[names(data) == "X"] <- "id_unique"
+# Charger tel quel en UTF-8
+x <- read.csv(INFILE, stringsAsFactors = FALSE, check.names = FALSE, fileEncoding = "UTF-8")
 
-# Étape 2 : supprimer l'ancienne colonne id si elle existe
-if ("id" %in% names(data)) {
-  data$id <- NULL
+# Noms bruts (trim)
+names(x) <- trimws(names(x))
+
+# Candidats colonnes anonymes
+bad_candidates <- c("", "X", "X.1", "Unnamed: 0", "ï..")
+
+# Étape 1 : détecter une colonne anonyme
+idx_bad <- which(names(x) %in% bad_candidates)
+
+if (length(idx_bad) >= 1) {
+  # renommer la première colonne anonyme en 'id'
+  names(x)[idx_bad[1]] <- "id"
+  
+  # supprimer toute autre colonne anonyme éventuelle
+  if (length(idx_bad) > 1) {
+    x <- x[, -idx_bad[-1], drop = FALSE]
+  }
+  
+  # supprimer une éventuelle colonne 'id' déjà existante (celle qui n'est pas la renommer)
+  idx_id <- which(names(x) == "id")
+  if (length(idx_id) > 1) {
+    # garder seulement la première (celle renommée) et supprimer l'autre
+    keep <- seq_along(names(x))
+    keep <- keep[-idx_id[-1]]
+    x <- x[, keep, drop = FALSE]
+  }
+  
+} else {
+  stop("ECHEC : aucune colonne anonyme trouvée pour devenir 'id'.")
 }
 
-# Étape 3 : renommer id_unique -> id
-names(data)[names(data) == "id_unique"] <- "id"
+# Sauvegarde
+write.csv(x, OUTFILE, row.names = FALSE, fileEncoding = "UTF-8")
 
-# Vérification
-print(names(data))
-
-# Sauvegarde en UTF-8
-con <- file("nasa_disaster_correction.csv", open = "w", encoding = "UTF-8")
-write.csv(data, con, row.names = FALSE)
-close(con)
-
-cat("OK : colonne 'X' renommée en 'id', ancienne colonne 'id' supprimée si présente.\n")
+# Diagnostic
+cat("OK : colonne sans nom renommée en 'id', ancienne 'id' supprimée si présente.\n")
+print(names(x))
