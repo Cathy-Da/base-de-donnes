@@ -3,11 +3,7 @@
 # Carte mondiale des catastrophes par ville et par type
 # Requiert : ggplot2, maps, mapdata (tu les as déjà), et ton CSV normalisé.
 
-suppressWarnings(suppressMessages({
-  library(ggplot2)
-  library(maps)
-  library(mapdata)
-}))
+source("Packages.R")
 
 INFILE <- "nasa_disaster_correction.csv"
 

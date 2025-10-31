@@ -1,5 +1,5 @@
 # Verification_min.R — validations basées sur countrycode (7 continents)
-library(countrycode)
+source("Packages.R")
 
 data <- read.csv(
   "nasa_disaster_correction.csv",

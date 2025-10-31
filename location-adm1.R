@@ -2,7 +2,7 @@
 # Mise à jour de 'location' et 'adm1' via GeoNames cities500_clean.rds
 # ⚠️ On écrase les valeurs existantes (overwrite)
 
-suppressWarnings(suppressMessages(library(dplyr)))
+source("Packages.R")
 
 INFILE  <- "nasa_disaster_correction.csv"
 OUTFILE <- "nasa_disaster_correction.csv"

@@ -4,7 +4,10 @@ packages <-c(
   "mapdata",     # cartes informations
   "stringi",      # chaine de caracteres
   "countrycode",   #
-  "tidygeocoder"
+  "tidygeocoder",  #
+  "ggplot2",       #
+  "dplyr",          #
+  "readr"          #
 )
 
 # Installation et chargement des packages

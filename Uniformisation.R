@@ -1,52 +1,50 @@
-library(stringi)
+source("Packages.R")
 
 # Lire en UTF-8
-data_raw <- read.csv(
+base_de_données <- read.csv(
   "nasa_disaster_dataset.csv",
   stringsAsFactors = FALSE,
   fileEncoding = "UTF-8",
   check.names = FALSE
 )
 
-data_corr <- data_raw
+base_de_données_corr <- base_de_données
 
 # 1) Nettoyage des mojibake
-clean_mojibake <- function(x) {
+nettoyer_mojibake <- function(x) {
   if (!is.character(x)) return(x)
-  y <- x
+  mojibake <- x
   # symboles typiques du mojibake déjà écrits dans le texte
-  y <- gsub("Ã", "", y, fixed = TRUE)
-  y <- gsub("Â", "", y, fixed = TRUE)
-  y <- gsub("ƒ", "", y, fixed = TRUE)     # <-- ajoute ƒ
-  y <- gsub("[\uFFFD]", "", y, perl = TRUE) # caractère de remplacement
-  # (optionnel) retirer les contrôles C1 s'il en reste
-  y <- gsub("[\u0080-\u009F]", "", y, perl = TRUE)
-  trimws(y)
+  mojibake <- gsub("Ã", "", mojibake, fixed = TRUE)
+  mojibake <- gsub("Â", "", mojibake, fixed = TRUE)
+  mojibake <- gsub("ƒ", "", mojibake, fixed = TRUE)
+  mojibake <- gsub("[\uFFFD]", "", mojibake, perl = TRUE)
+  mojibake <- gsub("[\u0080-\u009F]", "", mojibake, perl = TRUE)
+  trimws(mojibake)
 }
 
 # 2) Normalisation du texte (tu enlèves les accents ici)
-normalize_text <- function(x) {
-  if (!is.character(x)) return(x)
-  x <- trimws(x)
-  x <- gsub("\\s+", " ", x)
-  x <- tolower(x)
-  # si tu veux conserver les accents, commente la ligne suivante
-  x <- stri_trans_general(x, "Latin-ASCII")
-  x[x %in% c("", "na", "n/a", "unknown", "none", "null")] <- NA
-  x
+uniformiser_texte <- function(texte) {
+  if (!is.character(texte)) return(texte)
+  texte <- trimws(texte)
+  texte <- gsub("\\s+", " ", texte)
+  texte <- tolower(texte)
+  texte <- stri_trans_general(texte, "Latin-ASCII")
+  texte[texte %in% c("", "na", "n/a", "unknown", "none", "null")] <- NA
+  texte
 }
 
 # Appliquer nettoyage + normalisation aux colonnes texte
-for (col in names(data_corr)) {
-  if (is.character(data_corr[[col]])) {
-    data_corr[[col]] <- clean_mojibake(data_corr[[col]])
-    data_corr[[col]] <- normalize_text(data_corr[[col]])
+for (col in names(base_de_données_corr)) {
+  if (is.character(base_de_données_corr[[col]])) {
+    base_de_données_corr[[col]] <- nettoyer_mojibake(base_de_données_corr[[col]])
+    base_de_données_corr[[col]] <- uniformiser_texte(base_de_données_corr[[col]])
   }
 }
 
 # Sauvegarder en UTF-8
-con <- file("nasa_disaster_correction.csv", open = "w", encoding = "UTF-8")
-write.csv(data_corr, con, row.names = FALSE)
-close(con)
+fichier <- file("nasa_disaster_correction.csv", open = "w", encoding = "UTF-8")
+write.csv(base_de_données_corr, fichier, row.names = FALSE)
+close(fichier)
 
 cat("Nettoyage terminé. Fichier écrit : nasa_disaster_correction.csv\n")
