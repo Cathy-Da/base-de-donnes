@@ -26,18 +26,27 @@ former_geolocation <- function(lat, long) {
   ifelse(is.na(lat) | is.na(long), NA, sprintf("%.7f, %.7f", lat, long))
 }
 
-geolocation_arcgis <- function(vecteur_adresses, Nb_tentatives = Nb_tentatives, pause_base = Pause_erreur) {
+# ✅ Correction : valeurs fixes dans les arguments par défaut
+geolocation_arcgis <- function(vecteur_adresses, Nb_tentatives = 3, pause_base = 2) {
   for (tentative in seq_len(Nb_tentatives)) {
     resultat <- tryCatch(
       geo(address = vecteur_adresses, method = "arcgis", limit = 1, quiet = TRUE),
       error = function(e) {
-        message(sprintf("   ⚠️ Erreur ArcGIS (tentative %d/%d) : %s", tentative, Nb_tentatives, conditionMessage(e)))
+        message(sprintf("   ⚠️ Erreur ArcGIS (tentative %d/%d) : %s",
+                        tentative, Nb_tentatives, conditionMessage(e)))
         NULL
       }
     )
-    if (!is.null(resultat) && all(is.element(c("address", "lat", "long"), names(resultat)))) return(resultat)
+    
+    # Si on a bien obtenu un résultat complet
+    if (!is.null(resultat) && all(is.element(c("address", "lat", "long"), names(resultat)))) {
+      return(resultat)
+    }
+    
+    # Pause croissante avant la prochaine tentative
     Sys.sleep(pause_base * tentative)
   }
+  
   # Si toutes les tentatives échouent, retourner NA
   data.frame(address = vecteur_adresses, lat = NA_real_, long = NA_real_)
 }
@@ -47,17 +56,26 @@ base_de_données <- read.csv(entrée, check.names = FALSE, fileEncoding = "UTF-8
 noms_origine <- names(base_de_données)
 colonnes_requises <- c("location", "adm1", "country", "geolocation")
 colonnes_manquantes <- setdiff(colonnes_requises, names(base_de_données))
-if (length(colonnes_manquantes)) stop("Colonnes manquantes dans le fichier d’entrée : ", paste(colonnes_manquantes, collapse = ", "))
+if (length(colonnes_manquantes)) {
+  stop("Colonnes manquantes dans le fichier d’entrée : ",
+       paste(colonnes_manquantes, collapse = ", "))
+}
 
 # --- Correction des anciennes régions du Pakistan ---
-base_de_données$adm1 <- gsub("(?i)\\bN\\.?\\s*W\\.?\\s*F\\.?\\s*P\\.?\\b", "Khyber Pakhtunkhwa", base_de_données$adm1, perl = TRUE)
-base_de_données$adm1 <- gsub("(?i)\\bF\\.?\\s*A\\.?\\s*T\\.?\\s*A\\.?\\b", "Khyber Pakhtunkhwa", base_de_données$adm1, perl = TRUE)
+base_de_données$adm1 <- gsub("(?i)\\bN\\.?\\s*W\\.?\\s*F\\.?\\s*P\\.?\\b",
+                             "Khyber Pakhtunkhwa", base_de_données$adm1, perl = TRUE)
+base_de_données$adm1 <- gsub("(?i)\\bF\\.?\\s*A\\.?\\s*T\\.?\\s*A\\.?\\b",
+                             "Khyber Pakhtunkhwa", base_de_données$adm1, perl = TRUE)
 
-base_de_données$location <- gsub("(?i)\\bN\\.?\\s*W\\.?\\s*F\\.?\\s*P\\.?\\b", "Khyber Pakhtunkhwa", base_de_données$location, perl = TRUE)
-base_de_données$location <- gsub("(?i)\\bF\\.?\\s*A\\.?\\s*T\\.?\\s*A\\.?\\b", "Khyber Pakhtunkhwa", base_de_données$location, perl = TRUE)
+base_de_données$location <- gsub("(?i)\\bN\\.?\\s*W\\.?\\s*F\\.?\\s*P\\.?\\b",
+                                 "Khyber Pakhtunkhwa", base_de_données$location, perl = TRUE)
+base_de_données$location <- gsub("(?i)\\bF\\.?\\s*A\\.?\\s*T\\.?\\s*A\\.?\\b",
+                                 "Khyber Pakhtunkhwa", base_de_données$location, perl = TRUE)
 
 # 1) Construire les adresses pour TOUTES les lignes
-adresses_completes <- nettoyer_adresse(paste(base_de_données$location, base_de_données$adm1, base_de_données$country, sep = ", "))
+adresses_completes <- nettoyer_adresse(
+  paste(base_de_données$location, base_de_données$adm1, base_de_données$country, sep = ", ")
+)
 
 adresses_uniques <- sort(unique(na.omit(adresses_completes)))
 adresses_uniques <- adresses_uniques[adresses_uniques != ""]
@@ -82,8 +100,12 @@ if (length(adresses_uniques) == 0) {
     debut <- (i - 1) * Taille_lot + 1
     fin   <- min(i * Taille_lot, nb_total)
     cat(sprintf("Lot %d/%d : lignes %d -> %d\n", i, nb_lots, debut, fin))
+    
     vecteur <- adresses_uniques[debut:fin]
+    
+    # ✅ Appel inchangé : pas de passage d'arguments globaux ici
     resultats_lots[[i]] <- geolocation_arcgis(vecteur)
+    
     Sys.sleep(Pause_lots)
   }
   
