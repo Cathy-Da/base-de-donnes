@@ -3,7 +3,6 @@ source("Packages.R")
 # Lire en UTF-8
 base_de_données <- read.csv(
   "nasa_disaster_dataset.csv",
-  stringsAsFactors = FALSE,
   fileEncoding = "UTF-8",
   check.names = FALSE
 )
@@ -30,7 +29,8 @@ uniformiser_texte <- function(texte) {
   texte <- gsub("\\s+", " ", texte)
   texte <- tolower(texte)
   texte <- stri_trans_general(texte, "Latin-ASCII")
-  texte[texte %in% c("", "na", "n/a", "unknown", "none", "null")] <- NA
+  # Remplace %in% par is.element()
+  texte[is.element(texte, c("", "na", "n/a", "unknown", "none", "null"))] <- NA
   texte
 }
 

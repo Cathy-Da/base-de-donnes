@@ -1,25 +1,24 @@
 # Verification_min.R — validations basées sur countrycode (7 continents)
 source("Packages.R")
 
-data <- read.csv(
+base_de_données <- read.csv(
   "nasa_disaster_correction.csv",
-  stringsAsFactors = FALSE,
   check.names = FALSE,
   fileEncoding = "UTF-8"
 )
 
 # 1) Nombre de colonnes attendu (8)
-if (ncol(data) != 8) {
-  stop(sprintf("ECHEC: %d colonnes (attendu 8).", ncol(data)))
+if (ncol(base_de_données) != 8) {
+  stop(sprintf("ECHEC: %d colonnes (attendu 8).", ncol(base_de_données)))
 }
 
 # 2) Colonnes essentielles
-if (!("country" %in% names(data)))   stop("ECHEC: colonne 'country' absente.")
-if (!("continent" %in% names(data))) stop("ECHEC: colonne 'continent' absente.")
+if (!is.element("country", names(base_de_données)))   stop("ECHEC: colonne 'country' absente.")
+if (!is.element("continent", names(base_de_données))) stop("ECHEC: colonne 'continent' absente.")
 
 # 3) Interdiction de NA/vides
-if (any(is.na(data$country)   | data$country   == "")) stop("ECHEC: NA/vide dans 'country'.")
-if (any(is.na(data$continent) | data$continent == "")) stop("ECHEC: NA/vide dans 'continent'.")
+if (any(is.na(base_de_données$country)   | base_de_données$country   == "")) stop("ECHEC: NA/vide dans 'country'.")
+if (any(is.na(base_de_données$continent) | base_de_données$continent == "")) stop("ECHEC: NA/vide dans 'continent'.")
 
 # 4) Liste officielle des continents selon countrycode
 continents_ok <- sort(unique(na.omit(countrycode::codelist$continent)))
@@ -27,15 +26,15 @@ continents_ok <- sort(unique(na.omit(countrycode::codelist$continent)))
 continents_ok <- union(continents_ok, c("North America","South America"))
 
 # 5) Refuser explicitement 'Unknown'
-if (any(data$continent == "Unknown")) {
+if (any(base_de_données$continent == "Unknown")) {
   stop("ECHEC: 'continent' contient 'Unknown'.")
 }
 
 # 6) Vérifier que toutes les valeurs appartiennent à la liste countrycode
-bad <- setdiff(unique(data$continent), continents_ok)
-if (length(bad)) {
+valeurs_invalides <- setdiff(unique(base_de_données$continent), continents_ok)
+if (length(valeurs_invalides)) {
   stop(sprintf("ECHEC: 'continent' contient des valeurs inattendues: %s",
-               paste(bad, collapse=", ")))
+               paste(valeurs_invalides, collapse=", ")))
 }
 
 cat("✅ OK: 8 colonnes, aucun NA/vide, continents valides selon countrycode (North/South America acceptés).\n")

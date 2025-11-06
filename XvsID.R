@@ -1,45 +1,45 @@
-# --- XvsID.R (forcer la colonne sans nom -> id, supprimer l'ancienne id) ---
+# --- XvsID.R (forcer la colonne sans nom -> id, supprimer l’ancienne id) ---
 
-INFILE  <- "nasa_disaster_correction.csv"
-OUTFILE <- "nasa_disaster_correction.csv"
+entrée  <- "nasa_disaster_correction.csv"
+sortie  <- "nasa_disaster_correction.csv"
 
 # Charger tel quel en UTF-8
-x <- read.csv(INFILE, stringsAsFactors = FALSE, check.names = FALSE, fileEncoding = "UTF-8")
+données <- read.csv(entrée, check.names = FALSE, fileEncoding = "UTF-8")
 
-# Noms bruts (trim)
-names(x) <- trimws(names(x))
+# Nettoyer les noms de colonnes
+names(données) <- trimws(names(données))
 
-# Candidats colonnes anonymes
-bad_candidates <- c("", "X", "X.1", "Unnamed: 0", "ï..")
+# Candidats de colonnes anonymes
+colonne_enlever <- c("", "X", "X.1", "Unnamed: 0", "ï..")
 
 # Étape 1 : détecter une colonne anonyme
-idx_bad <- which(names(x) %in% bad_candidates)
+index_autres <- which(is.element(names(données), colonne_enlever))
 
-if (length(idx_bad) >= 1) {
-  # renommer la première colonne anonyme en 'id'
-  names(x)[idx_bad[1]] <- "id"
+if (length(index_autres) >= 1) {
+  # Renommer la première colonne anonyme en 'id'
+  names(données)[index_autres[1]] <- "id"
   
-  # supprimer toute autre colonne anonyme éventuelle
-  if (length(idx_bad) > 1) {
-    x <- x[, -idx_bad[-1], drop = FALSE]
+  # Supprimer toute autre colonne anonyme éventuelle
+  if (length(index_autres) > 1) {
+    données <- données[, -index_autres[-1], drop = FALSE]
   }
   
-  # supprimer une éventuelle colonne 'id' déjà existante (celle qui n'est pas la renommer)
-  idx_id <- which(names(x) == "id")
-  if (length(idx_id) > 1) {
-    # garder seulement la première (celle renommée) et supprimer l'autre
-    keep <- seq_along(names(x))
-    keep <- keep[-idx_id[-1]]
-    x <- x[, keep, drop = FALSE]
+  # Supprimer une éventuelle colonne 'id' déjà existante (celle qui n'est pas renommée)
+  index_id <- which(names(données) == "id")
+  if (length(index_id) > 1) {
+    # Garder seulement la première (celle renommée) et supprimer les autres
+    conserver <- seq_along(names(données))
+    conserver <- conserver[-index_id[-1]]
+    données <- données[, conserver, drop = FALSE]
   }
   
 } else {
-  stop("ECHEC : aucune colonne anonyme trouvée pour devenir 'id'.")
+  stop("ECHEC : aucune colonne anonyme trouvée à renommer en 'id'.")
 }
 
 # Sauvegarde
-write.csv(x, OUTFILE, row.names = FALSE, fileEncoding = "UTF-8")
+write.csv(données, sortie, row.names = FALSE, fileEncoding = "UTF-8")
 
 # Diagnostic
-cat("OK : colonne sans nom renommée en 'id', ancienne 'id' supprimée si présente.\n")
-print(names(x))
+cat("✅ OK : colonne sans nom renommée en 'id', ancienne colonne 'id' supprimée si présente.\n")
+print(names(données))

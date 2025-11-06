@@ -1,112 +1,117 @@
-# --- geolocate_from_correction.R ---
+# --- geolocalisation_depuis_correction.R ---
 # Force le géocodage ArcGIS pour TOUTES les lignes
 # Source : nasa_disaster_correction.csv
 # Schéma attendu : id,country,geolocation,level,adm1,location,disastertype,continent
 
 source("Packages.R")
 
-INFILE  <- "nasa_disaster_correction.csv"
-OUTFILE <- "nasa_disaster_correction.csv"   # On réécrit au même endroit
+entrée  <- "nasa_disaster_correction.csv"
+sortie  <- "nasa_disaster_correction.csv"   # On réécrit au même endroit
 
-CHUNK_SIZE    <- 300   # Ajuste entre 100–300 selon la stabilité
-MAX_RETRIES   <- 3
-SLEEP_RETRY   <- 2     # Pause progressive en cas d’erreur
-SLEEP_BETWEEN <- 1     # Pause entre lots (secondes)
+Taille_lot       <- 300   # Ajuste entre 100–300 selon la stabilité
+Nb_tentatives    <- 3
+Pause_erreur     <- 2     # Pause progressive en cas d’erreur
+Pause_lots       <- 1     # Pause entre lots (secondes)
 
-# ---------------- Utils ----------------
-clean_addr <- function(x) {
-  x <- trimws(x)
-  x <- gsub("\\s+", " ", x)
-  x <- gsub(",\\s*,", ", ", x)           # évite ", ,"
-  x <- gsub("^,\\s*|\\s*,$", "", x)      # évite virgule en début/fin
-  x
+# ---------------- Fonctions utilitaires ----------------
+nettoyer_adresse <- function(texte) {
+  texte <- trimws(texte)
+  texte <- gsub("\\s+", " ", texte)
+  texte <- gsub(",\\s*,", ", ", texte)      # évite ", ,"
+  texte <- gsub("^,\\s*|\\s*,$", "", texte) # évite virgule au début/fin
+  texte
 }
 
-to_txt <- function(lat, long) {
+former_geolocation <- function(lat, long) {
   ifelse(is.na(lat) | is.na(long), NA, sprintf("%.7f, %.7f", lat, long))
 }
 
-geo_arcgis_retry <- function(addr_vec, max_retries = MAX_RETRIES, sleep_base = SLEEP_RETRY) {
-  for (r in seq_len(max_retries)) {
-    res <- tryCatch(
-      geo(address = addr_vec, method = "arcgis", limit = 1, quiet = TRUE),
+geolocation_arcgis <- function(vecteur_adresses, Nb_tentatives = Nb_tentatives, pause_base = Pause_erreur) {
+  for (tentative in seq_len(Nb_tentatives)) {
+    resultat <- tryCatch(
+      geo(address = vecteur_adresses, method = "arcgis", limit = 1, quiet = TRUE),
       error = function(e) {
-        message(sprintf("   ⚠️ ArcGIS erreur (retry %d/%d): %s", r, max_retries, conditionMessage(e)))
+        message(sprintf("   ⚠️ Erreur ArcGIS (tentative %d/%d) : %s", tentative, Nb_tentatives, conditionMessage(e)))
         NULL
       }
     )
-    if (!is.null(res) && all(c("address", "lat", "long") %in% names(res))) return(res)
-    Sys.sleep(sleep_base * r)
+    if (!is.null(resultat) && all(is.element(c("address", "lat", "long"), names(resultat)))) return(resultat)
+    Sys.sleep(pause_base * tentative)
   }
-  # En dernier recours, renvoyer NA pour ces adresses
-  data.frame(address = addr_vec, lat = NA_real_, long = NA_real_, stringsAsFactors = FALSE)
+  # Si toutes les tentatives échouent, retourner NA
+  data.frame(address = vecteur_adresses, lat = NA_real_, long = NA_real_)
 }
 
-# 0) Lire la base (UTF-8)
-data <- read.csv(INFILE, stringsAsFactors = FALSE, check.names = FALSE, fileEncoding = "UTF-8")
-orig_names <- names(data)  # On préservera exactement cette structure
-req <- c("location", "adm1", "country", "geolocation")
-missing <- setdiff(req, names(data))
-if (length(missing)) stop("Colonnes manquantes dans INFILE: ", paste(missing, collapse = ", "))
+# 0) Lecture de la base de données
+base_de_données <- read.csv(entrée, check.names = FALSE, fileEncoding = "UTF-8")
+noms_origine <- names(base_de_données)
+colonnes_requises <- c("location", "adm1", "country", "geolocation")
+colonnes_manquantes <- setdiff(colonnes_requises, names(base_de_données))
+if (length(colonnes_manquantes)) stop("Colonnes manquantes dans le fichier d’entrée : ", paste(colonnes_manquantes, collapse = ", "))
 
 # --- Correction des anciennes régions du Pakistan ---
-data$adm1 <- gsub("(?i)\\bN\\.?\\s*W\\.?\\s*F\\.?\\s*P\\.?\\b", "Khyber Pakhtunkhwa", data$adm1, perl = TRUE)
-data$adm1 <- gsub("(?i)\\bF\\.?\\s*A\\.?\\s*T\\.?\\s*A\\.?\\b", "Khyber Pakhtunkhwa", data$adm1, perl = TRUE)
+base_de_données$adm1 <- gsub("(?i)\\bN\\.?\\s*W\\.?\\s*F\\.?\\s*P\\.?\\b", "Khyber Pakhtunkhwa", base_de_données$adm1, perl = TRUE)
+base_de_données$adm1 <- gsub("(?i)\\bF\\.?\\s*A\\.?\\s*T\\.?\\s*A\\.?\\b", "Khyber Pakhtunkhwa", base_de_données$adm1, perl = TRUE)
 
-data$location <- gsub("(?i)\\bN\\.?\\s*W\\.?\\s*F\\.?\\s*P\\.?\\b", "Khyber Pakhtunkhwa", data$location, perl = TRUE)
-data$location <- gsub("(?i)\\bF\\.?\\s*A\\.?\\s*T\\.?\\s*A\\.?\\b", "Khyber Pakhtunkhwa", data$location, perl = TRUE)
+base_de_données$location <- gsub("(?i)\\bN\\.?\\s*W\\.?\\s*F\\.?\\s*P\\.?\\b", "Khyber Pakhtunkhwa", base_de_données$location, perl = TRUE)
+base_de_données$location <- gsub("(?i)\\bF\\.?\\s*A\\.?\\s*T\\.?\\s*A\\.?\\b", "Khyber Pakhtunkhwa", base_de_données$location, perl = TRUE)
 
-# 1) Construire les adresses pour TOUTES les lignes (on force le recalcul)
-full_address <- clean_addr(paste(data$location, data$adm1, data$country, sep = ", "))
+# 1) Construire les adresses pour TOUTES les lignes
+adresses_completes <- nettoyer_adresse(paste(base_de_données$location, base_de_données$adm1, base_de_données$country, sep = ", "))
 
-addr_unique <- sort(unique(na.omit(full_address)))
-addr_unique <- addr_unique[addr_unique != ""]
-cat("Adresses uniques à géocoder :", length(addr_unique), "\n")
+adresses_uniques <- sort(unique(na.omit(adresses_completes)))
+adresses_uniques <- adresses_uniques[adresses_uniques != ""]
+cat("Nombre d’adresses uniques à géocoder :", length(adresses_uniques), "\n")
 
-if (length(addr_unique) == 0) {
+if (length(adresses_uniques) == 0) {
   warning("Aucune adresse exploitable. 'geolocation' sera mise à NA.")
-  data$geolocation <- NA
-  write.csv(data, OUTFILE, row.names = FALSE)
-  cat("Fichier écrit :", OUTFILE, "\n")
+  base_de_données$geolocation <- NA
+  write.csv(base_de_données, sortie, row.names = FALSE, fileEncoding = "UTF-8")
+  cat("Fichier écrit :", sortie, "\n")
   invisible(NULL)
 } else {
   # 2) Géocodage par lots (ArcGIS)
-  n <- length(addr_unique)
-  n_chunks <- ceiling(n / CHUNK_SIZE)
-  res_list <- vector("list", n_chunks)
+  nb_total <- length(adresses_uniques)
+  nb_lots <- ceiling(nb_total / Taille_lot)
+  resultats_lots <- vector("list", nb_lots)
   
-  old_to <- getOption("timeout"); options(timeout = max(600, old_to))
+  ancien_timeout <- getOption("timeout")
+  options(timeout = max(600, ancien_timeout))
   
-  for (i in seq_len(n_chunks)) {
-    from <- (i - 1) * CHUNK_SIZE + 1
-    to   <- min(i * CHUNK_SIZE, n)
-    cat(sprintf("Lot %d/%d : %d -> %d\n", i, n_chunks, from, to))
-    vec <- addr_unique[from:to]
-    res_list[[i]] <- geo_arcgis_retry(vec)
-    Sys.sleep(SLEEP_BETWEEN)
+  for (i in seq_len(nb_lots)) {
+    debut <- (i - 1) * Taille_lot + 1
+    fin   <- min(i * Taille_lot, nb_total)
+    cat(sprintf("Lot %d/%d : lignes %d -> %d\n", i, nb_lots, debut, fin))
+    vecteur <- adresses_uniques[debut:fin]
+    resultats_lots[[i]] <- geolocation_arcgis(vecteur)
+    Sys.sleep(Pause_lots)
   }
   
-  options(timeout = old_to)
+  options(timeout = ancien_timeout)
   
-  geo_res <- bind_rows(res_list)  # cols: address, lat, long
+  geo_resultats <- bind_rows(resultats_lots)  # colonnes : address, lat, long
   
-  # 3) Remapper vers toutes les lignes et (ré)écrire geolocation
-  lat_map  <- geo_res$lat[match(full_address, geo_res$address)]
-  long_map <- geo_res$long[match(full_address, geo_res$address)]
-  data$geolocation <- to_txt(lat_map, long_map)
+  # 3) Associer les résultats à chaque ligne
+  latitude  <- geo_resultats$lat[match(adresses_completes, geo_resultats$address)]
+  longitude <- geo_resultats$long[match(adresses_completes, geo_resultats$address)]
+  base_de_données$geolocation <- former_geolocation(latitude, longitude)
   
-  # 4) Garde-fou: structure inchangée
-  if (!identical(names(data), orig_names)) {
-    cat("Colonnes attendues :", paste(orig_names, collapse = ", "), "\n")
-    cat("Colonnes actuelles :", paste(names(data), collapse = ", "), "\n")
-    stop("ECHEC : les noms de colonnes ne correspondent pas.")
+  # 4) Vérification de la structure du fichier
+  if (!identical(names(base_de_données), noms_origine)) {
+    cat("Colonnes attendues :", paste(noms_origine, collapse = ", "), "\n")
+    cat("Colonnes actuelles :", paste(names(base_de_données), collapse = ", "), "\n")
+    stop("ERREUR : la structure du fichier a été modifiée.")
   }
   
-  # 5) Sauvegarder
-  write.csv(data, OUTFILE, row.names = FALSE, fileEncoding = "UTF-8")
+  # 5) Sauvegarder le fichier final
+  write.csv(base_de_données, sortie, row.names = FALSE, fileEncoding = "UTF-8")
   
-  # 6) Bilan
-  nb_ok <- sum(!is.na(data$geolocation))
-  nb_na <- sum(is.na(data$geolocation))
-  cat("Terminé. Coordonnées remplies :", nb_ok, " | Restant sans coordonnées :", nb_na, "\n")
+  # 6) Résumé
+  nb_coordonnees <- sum(!is.na(base_de_données$geolocation))
+  nb_vide <- sum(is.na(base_de_données$geolocation))
+  
+  cat("✅ Géocodage terminé avec ArcGIS.\n")
+  cat("- Coordonnées trouvées :", nb_coordonnees, "\n")
+  cat("- Coordonnées manquantes :", nb_vide, "\n")
+  cat("Fichier mis à jour :", sortie, "\n")
 }

@@ -5,7 +5,6 @@ source("Packages.R")
 # Lecture du fichier initial (sans modification)
 data_raw <- read.csv(
   "nasa_disaster_dataset.csv",
-  stringsAsFactors = FALSE,
   check.names = FALSE,
   fileEncoding = "UTF-8"
 )
@@ -20,8 +19,7 @@ detect_problemes <- function(x) {
 resultats <- data.frame(
   colonne = character(),
   lignes_affectees = integer(),
-  exemples = character(),
-  stringsAsFactors = FALSE
+  exemples = character()
 )
 
 for (col in names(data_raw)) {
@@ -33,8 +31,7 @@ for (col in names(data_raw)) {
       resultats <- rbind(resultats, data.frame(
         colonne = col,
         lignes_affectees = sum(mask),
-        exemples = paste(exemples, collapse = " | "),
-        stringsAsFactors = FALSE
+        exemples = paste(exemples, collapse = " | ")
       ))
     }
   }

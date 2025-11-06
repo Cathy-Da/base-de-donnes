@@ -2,12 +2,12 @@
 packages <-c(
   "maps",        # cartes
   "mapdata",     # cartes informations
-  "stringi",      # chaine de caracteres
-  "countrycode",   #
-  "tidygeocoder",  #
-  "ggplot2",       #
-  "dplyr",          #
-  "readr"          #
+  "stringi",     # chaine de caracteres
+  "countrycode", # code de pays- noms- continents
+  "tidygeocoder",# ArcGIS, latitude, longitude
+  "ggplot2",     # carte
+  "dplyr",       # tableau de données
+  "readr"        # lire fichier
 )
 
 # Installation et chargement des packages
