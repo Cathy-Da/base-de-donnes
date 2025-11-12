@@ -1,43 +1,23 @@
-# --- Countrycode-continent-country.R (version recalcul complet) ---
-# Recalcule entièrement la colonne 'continent' à partir de 'country'
-# Corrige Kosovo et Micronesia, et harmonise les noms via countrycode
-
 source("Packages.R")
 
 entrée  <- "nasa_disaster_correction.csv"
 sortie  <- "nasa_disaster_correction.csv"
-
-# --- Lecture du fichier ---
 données <- read.csv(entrée, check.names = FALSE, fileEncoding = "UTF-8")
-names(données) <- trimws(names(données))
 
-# --- Fonction pour nettoyer les espaces spéciaux ---
-trim_nbsp <- function(valeur) {
-  if (is.null(valeur)) return(valeur)
-  valeur <- as.character(valeur)
-  valeur <- gsub("\u00A0", " ", valeur, fixed = TRUE)  # enlève les espaces insécables
-  trimws(valeur)
-}
-
-# --- Harmoniser la colonne 'country' ---
-if (!is.element("country", names(données))) stop("Erreur : colonne 'country' absente du fichier.")
-données$country <- trim_nbsp(données$country)
-
-# Correction robuste pour Micronesia (ignore casse et espaces)
-detecte_micronesia <- grepl("^\\s*micronesia\\s*$", données$country, ignore.case = TRUE)
+# Correction pour Micronesia mal affiché selon country code
+detecte_micronesia <- données$country == "micronesia"
 données$country[detecte_micronesia] <- "Micronesia, Federated States of"
 
-# Harmoniser les pays avec countrycode
-pays_harmonisés <- countrycode(
+# Uniformisation des pays
+pays_uniformisés <- countrycode(
   sourcevar    = données$country,
   origin       = "country.name",
-  destination  = "country.name",
-  warn         = FALSE
+  destination  = "country.name"
 )
-lignes_valide <- !is.na(pays_harmonisés) & nzchar(pays_harmonisés)
-données$country[lignes_valide] <- pays_harmonisés[lignes_valide]
+lignes_valide <- !is.na(pays_uniformisés) & nzchar(pays_uniformisés)
+données$country[lignes_valide] <- pays_uniformisés[lignes_valide]
 
-# --- Recalcul complet de la colonne 'continent' ---
+# Correction des continents manquants après vérification
 correction_continent <- c(
   "Kosovo" = "Europe"
 )
@@ -45,27 +25,24 @@ données$continent <- countrycode(
   sourcevar    = données$country,
   origin       = "country.name",
   destination  = "continent",
-  custom_match = correction_continent,
-  warn         = FALSE
+  custom_match = correction_continent
 )
 
-# --- Vérification des pays non reconnus ---
-country_na <- données$country[is.na(pays_harmonisés) | pays_harmonisés == ""]
+# Vérification des pays non reconnus
+country_na <- données$country[is.na(pays_uniformisés) | pays_uniformisés == ""]
 if (length(country_na) > 0) {
-  cat("⚠️  Certains pays n'ont pas été reconnus par countrycode :\n")
+  cat("Pays non reconnus du fichier countrycode :\n")
   print(unique(country_na))
   cat("\n")
 }
 
-# --- Sauvegarde du fichier corrigé ---
+# Sauvegarde
 write.csv(données, sortie, row.names = FALSE, fileEncoding = "UTF-8")
 
-# --- Bilan final ---
-na_country   <- sum(is.na(données$country) | données$country == "")
-na_continent <- sum(is.na(données$continent) | données$continent == "" | données$continent == "Unknown")
-continents_detectes <- sort(unique(na.omit(données$continent)))
+na_country   <- sum(is.na(données$country) | données$country == "") # nombre de pays manquant
+na_continent <- sum(is.na(données$continent) | données$continent == "" | données$continent == "Unknown") # nombre de continent manquant
+continents_base_de_données <- sort(unique(na.omit(données$continent))) # liste des continents
 
-cat("OK : pays harmonisés et continents recalculés à 100% par countrycode.\n")
 cat("Pays manquants :", na_country, "\n")
 cat("Continents manquants :", na_continent, "\n")
-cat("Continents détectés :", paste(continents_detectes, collapse = ", "), "\n")
+cat("Continents dans la base de données :", paste(continents_base_de_données, collapse = ", "), "\n")
