@@ -1,45 +1,30 @@
-# --- XvsID.R (forcer la colonne sans nom -> id, supprimer l’ancienne id) ---
+source("Packages.R")
 
 entrée  <- "nasa_disaster_correction.csv"
 sortie  <- "nasa_disaster_correction.csv"
 
-# Charger tel quel en UTF-8
 données <- read.csv(entrée, check.names = FALSE, fileEncoding = "UTF-8")
 
-# Nettoyer les noms de colonnes
-names(données) <- trimws(names(données))
+# Renommer la première colonne (colonne 1) en 'id'
+names(données)[1] <- "id"
 
-# Candidats de colonnes anonymes
-colonne_enlever <- c("", "X", "X.1", "Unnamed: 0", "ï..")
-
-# Étape 1 : détecter une colonne anonyme
-index_autres <- which(is.element(names(données), colonne_enlever))
-
-if (length(index_autres) >= 1) {
-  # Renommer la première colonne anonyme en 'id'
-  names(données)[index_autres[1]] <- "id"
-  
-  # Supprimer toute autre colonne anonyme éventuelle
-  if (length(index_autres) > 1) {
-    données <- données[, -index_autres[-1], drop = FALSE]
-  }
-  
-  # Supprimer une éventuelle colonne 'id' déjà existante (celle qui n'est pas renommée)
-  index_id <- which(names(données) == "id")
-  if (length(index_id) > 1) {
-    # Garder seulement la première (celle renommée) et supprimer les autres
-    conserver <- seq_along(names(données))
-    conserver <- conserver[-index_id[-1]]
-    données <- données[, conserver, drop = FALSE]
-  }
-  
-} else {
-  stop("ECHEC : aucune colonne anonyme trouvée à renommer en 'id'.")
-}
+# Supprimer la deuxième colonne (colonne 2)
+données <- données[, -2, drop = FALSE]
 
 # Sauvegarde
 write.csv(données, sortie, row.names = FALSE, fileEncoding = "UTF-8")
 
+# Vérifier doublons et NA dans 'id'
+na_id <- any(is.na(données$id))
+doublon_id <- anyDuplicated(données$id) > 0
+
+if (na_id || doublon_id) {
+  cat("⚠️ Problèmes détectés dans 'id' :\n")
+  if (na_id) cat("- Valeurs manquantes dans id (NA)\n")
+  if (doublon_id) cat("- Doublons dans id\n")
+} else {
+  cat("✅ OK : 'id' sans doublon et sans NA\n")
+}
+
 # Diagnostic
-cat("✅ OK : colonne sans nom renommée en 'id', ancienne colonne 'id' supprimée si présente.\n")
 print(names(données))

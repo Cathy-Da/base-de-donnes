@@ -7,7 +7,8 @@ packages <-c(
   "tidygeocoder",# ArcGIS, latitude, longitude
   "ggplot2",     # carte
   "dplyr",       # tableau de données
-  "readr"        # lire fichier
+  "readr",       # lire fichier
+  "ggspatial"    # carte mondiale
 )
 
 # Installation et chargement des packages
