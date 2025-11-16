@@ -1,18 +1,7 @@
-# --- Carte_Catastrophes_SansRegroupement_ParType.R ---
-# 1 point = 1 événement individuel (aucun regroupement)
-# Produit :
-#   - Carte globale de tous les événements
-#   - Carte facettée par type de catastrophe
-# Requiert : ggplot2, maps, mapdata
-# Source : nasa_disaster_correction.csv
-
 source("Packages.R")
-library(maps)
-library(ggspatial)  # Optionnel si tu veux réactiver plus tard une échelle
-
 fichier_entrée <- "nasa_disaster_correction.csv"
 
-# ---------- Fonction utilitaire ----------
+# Fonction
 extraire_coordonnees <- function(chaine) {
   latitude <- longitude <- rep(NA_real_, length(chaine))
   ok <- !is.na(chaine) & nzchar(chaine)
@@ -29,19 +18,12 @@ extraire_coordonnees <- function(chaine) {
   list(lat = latitude, lon = longitude)
 }
 
-# ---------- Lecture du fichier principal ----------
+# Lecture
 base_de_donnees <- read.csv(
   fichier_entrée,
   check.names = FALSE,
   fileEncoding = "UTF-8"
 )
-
-# Vérification des colonnes requises
-colonnes_requises <- c("id", "country", "geolocation", "adm1", "location", "disastertype", "continent")
-colonnes_manquantes <- setdiff(colonnes_requises, names(base_de_donnees))
-if (length(colonnes_manquantes)) {
-  stop("Colonnes manquantes : ", paste(colonnes_manquantes, collapse = ", "))
-}
 
 # Extraction des coordonnées
 coordonnees <- extraire_coordonnees(base_de_donnees$geolocation)
@@ -54,12 +36,12 @@ valide <- !is.na(base_de_donnees$latitude) & !is.na(base_de_donnees$longitude) &
   base_de_donnees$longitude >= -180 & base_de_donnees$longitude <= 180
 
 catastrophes <- base_de_donnees[valide, c("location", "adm1", "country", "disastertype", "latitude", "longitude", "continent")]
-catastrophes$nombre <- 1  # chaque événement = 1
+catastrophes$nombre <- 1
 
-# ---------- Fond de carte ----------
+# Fond de carte
 monde <- map_data("world")
 
-# ---------- Thème graphique ----------
+# Thème graphique
 theme_carte <- theme_minimal() +
   theme(
     panel.grid = element_blank(),
@@ -73,7 +55,7 @@ theme_carte <- theme_minimal() +
     legend.title = element_text(face = "bold")
   )
 
-# ---------- 1️⃣ Carte globale ----------
+#  Carte
 carte_globale <- ggplot() +
   geom_polygon(
     data = monde,
@@ -102,7 +84,7 @@ ggsave(
   width = 13, height = 7.5, dpi = 220, bg = "white"
 )
 
-# ---------- 2️⃣ Carte par type ----------
+#  Carte par type
 types_disponibles <- sort(unique(catastrophes$disastertype))
 catastrophes_filtre <- catastrophes[catastrophes$disastertype %in% types_disponibles, ]
 
@@ -135,8 +117,6 @@ ggsave(
   width = 13, height = 9.5, dpi = 220, bg = "white"
 )
 
-# ---------- Résumé ----------
-cat("✅ Cartes créées avec succès :\n")
 cat("- Carte_Catastrophes_Global.png\n")
 cat("- Carte_Catastrophes_ParType.png\n")
 cat("- Nombre total d’événements tracés :", nrow(catastrophes), "\n")

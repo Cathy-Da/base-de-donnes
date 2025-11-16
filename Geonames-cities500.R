@@ -1,25 +1,16 @@
-# --- geonames_download.R ---
-# Télécharge et prépare GeoNames cities500.txt (version simplifiée, sans lat/long)
+# GeoNames cities500.txt
 
-dir.create("geonames_data", showWarnings = FALSE)
+dir.create("geonames_data")
 
 URL  <- "https://download.geonames.org/export/dump/cities500.zip"
 ZIP  <- file.path("geonames_data", "cities500.zip")
 TXT_files  <- file.path("geonames_data", "cities500.txt")
 
-# 1) Télécharger si non présent
-if (!file.exists(ZIP)) {
-  cat("Téléchargement de cities500.zip...\n")
-  download.file(URL, ZIP, mode = "wb")
-}
+# Télécharge et décompresse
+download.file(URL, ZIP, mode = "wb")
+unzip(ZIP, exdir = "geonames_data", overwrite = TRUE)
 
-# 2) Décompresser si nécessaire
-if (!file.exists(TXT_files)) {
-  cat("Décompression...\n")
-  unzip(ZIP, exdir = "geonames_data")
-}
-
-# 3) Lire cities500.txt
+# Lire cities500.txt
 colonnes <- c("geonameid","name","asciiname","alternatenames",
               "feature_class","feature_code","country_code","cc2",
               "admin1_code","admin2_code","admin3_code","admin4_code",
