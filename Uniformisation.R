@@ -14,8 +14,8 @@ nettoyer_mojibake <- function(valeur) {
   if (!is.character(valeur)) return(valeur)
   mojibake <- valeur
   
-  # Supprimer les espaces insécables et caractères corrompus
-  mojibake <- gsub("\u00A0", " ", mojibake, fixed = TRUE)  # enlève les espaces insécables
+# Supprimer les espaces insécables et caractères corrompus
+  mojibake <- gsub("\u00A0", " ", mojibake, fixed = TRUE)
   mojibake <- gsub("Ã", "", mojibake, fixed = TRUE)
   mojibake <- gsub("Â", "", mojibake, fixed = TRUE)
   mojibake <- gsub("ƒ", "", mojibake, fixed = TRUE)

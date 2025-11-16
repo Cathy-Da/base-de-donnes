@@ -1,4 +1,3 @@
-# Verification_min.R — validations basées sur countrycode (7 continents)
 source("Packages.R")
 
 base_de_données <- read.csv(
@@ -7,9 +6,9 @@ base_de_données <- read.csv(
   fileEncoding = "UTF-8"
 )
 
-# 1) Nombre de colonnes attendu (8)
+# Nombre de colonnes
 if (ncol(base_de_données) != 8) {
-  stop(sprintf("ECHEC: %d colonnes (attendu 8).", ncol(base_de_données)))
+  stop(sprintf("ECHEC: %d colonnes.", ncol(base_de_données)))
 }
 
 # 2) Colonnes essentielles
@@ -37,4 +36,8 @@ if (length(valeurs_invalides)) {
                paste(valeurs_invalides, collapse=", ")))
 }
 
-cat("✅ OK: 8 colonnes, aucun NA/vide, continents valides selon countrycode (North/South America acceptés).\n")
+# 7) Vérification informative : nombre de "no-data" (aucun STOP)
+nb_no_data <- sum(tolower(as.matrix(base_de_données)) == "no-data", na.rm = TRUE)
+cat("Info : nombre de champs 'no-data' détectés :", nb_no_data, "\n")
+
+cat("OK: 8 colonnes, aucun NA/vide, continents valides selon countrycode (North/South America acceptés).\n")

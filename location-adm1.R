@@ -3,7 +3,6 @@
 # ⚠️ On écrase les valeurs existantes (overwrite)
 
 source("Packages.R")
-
 entrée  <- "nasa_disaster_correction.csv"
 sortie <- "nasa_disaster_correction.csv"
 villes  <- "geonames_data/cities500_clean.rds"
