@@ -4,7 +4,7 @@ entrée  <- "nasa_disaster_correction.csv"
 sortie  <- "nasa_disaster_correction.csv"
 données <- read.csv(entrée, check.names = FALSE, fileEncoding = "UTF-8")
 
-# Correction pour Micronesia mal affiché selon country code
+# Correction pour Micronesia mal affiché selon country code apres essaie
 detecte_micronesia <- données$country == "micronesia"
 données$country[detecte_micronesia] <- "Micronesia, Federated States of"
 
@@ -17,7 +17,7 @@ pays_uniformisés <- countrycode(
 lignes_valide <- !is.na(pays_uniformisés) & nzchar(pays_uniformisés)
 données$country[lignes_valide] <- pays_uniformisés[lignes_valide]
 
-# Correction des continents manquants après vérification
+# Correction des continents manquants après essaie
 correction_continent <- c(
   "Kosovo" = "Europe"
 )
@@ -33,7 +33,6 @@ country_na <- données$country[is.na(pays_uniformisés) | pays_uniformisés == "
 if (length(country_na) > 0) {
   cat("Pays non reconnus du fichier countrycode :\n")
   print(unique(country_na))
-  cat("\n")
 }
 
 # Sauvegarde
