@@ -5,10 +5,8 @@ sortie  <- "nasa_disaster_correction.csv"
 
 données <- read.csv(entrée, check.names = FALSE, fileEncoding = "UTF-8")
 
-# Renommer colonne 1 en id
+# Renommer colonne 1 en id et supprimer la colonne 2
 names(données)[1] <- "id"
-
-# Supprimer colonne 2
 données <- données[, -2, drop = FALSE]
 
 # Sauvegarde

@@ -7,21 +7,18 @@ base_de_données <- read.csv(
   check.names = FALSE
 )
 
-base_de_données_corr <- base_de_données
-
-# Nettoyage des mojibake
-nettoyer_mojibake <- function(valeur) {
+# Nettoyage des caractères illisibles
+nettoyer_caractères_illisibles <- function(valeur) {
   if (!is.character(valeur)) return(valeur)
-  mojibake <- valeur
+  caractères_illisibles <- valeur
   
-# Supprimer les espaces insécables et caractères corrompus
-  mojibake <- gsub("\u00A0", " ", mojibake, fixed = TRUE)
-  mojibake <- gsub("Ã", "", mojibake, fixed = TRUE)
-  mojibake <- gsub("Â", "", mojibake, fixed = TRUE)
-  mojibake <- gsub("ƒ", "", mojibake, fixed = TRUE)
-  mojibake <- gsub("[\uFFFD]", "", mojibake, perl = TRUE)
-  mojibake <- gsub("[\u0080-\u009F]", "", mojibake, perl = TRUE)
-  trimws(mojibake)
+  caractères_illisibles <- gsub("\u00A0", " ", caractères_illisibles, fixed = TRUE)
+  caractères_illisibles <- gsub("Ã", "", caractères_illisibles, fixed = TRUE)
+  caractères_illisibles <- gsub("Â", "", caractères_illisibles, fixed = TRUE)
+  caractères_illisibles <- gsub("ƒ", "", caractères_illisibles, fixed = TRUE)
+  caractères_illisibles <- gsub("[\uFFFD]", "", caractères_illisibles, perl = TRUE)
+  caractères_illisibles <- gsub("[\u0080-\u009F]", "", caractères_illisibles, perl = TRUE)
+  trimws(caractères_illisibles)
 }
 
 # Uniformisation du texte
@@ -35,16 +32,20 @@ uniformiser_texte <- function(texte) {
   texte
 }
 
-for (col in names(base_de_données_corr)) {
-  if (is.character(base_de_données_corr[[col]])) {
-    base_de_données_corr[[col]] <- nettoyer_mojibake(base_de_données_corr[[col]])
-    base_de_données_corr[[col]] <- uniformiser_texte(base_de_données_corr[[col]])
+# Appliquer les deux nettoyages
+for (col in names(base_de_données)) {
+  if (is.character(base_de_données[[col]])) {
+    base_de_données[[col]] <- nettoyer_caractères_illisibles(base_de_données[[col]])
+    base_de_données[[col]] <- uniformiser_texte(base_de_données[[col]])
   }
 }
 
 # Sauvegarde
-fichier <- file("nasa_disaster_correction.csv", open = "w", encoding = "UTF-8")
-write.csv(base_de_données_corr, fichier, row.names = FALSE)
-close(fichier)
+write.csv(
+  base_de_données,
+  "nasa_disaster_correction.csv",
+  row.names = FALSE,
+  fileEncoding = "UTF-8"
+)
 
 cat("Fichier : nasa_disaster_correction.csv\n")

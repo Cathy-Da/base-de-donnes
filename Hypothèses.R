@@ -12,11 +12,9 @@ nombre_continents <- nombre_continents[order(-nombre_continents$n_catastrophes),
 
 cat("Nombre de catastrophes par continent\n")
 print(nombre_continents)
-cat("\n")
 
 continent_max <- nombre_continents[1, ]
-cat("Continent avec le plus :", continent_max$continent,
-    "avec", continent_max$n_catastrophes, "catastrophes.\n\n")
+cat("Continent avec le plus :", continent_max$continent, continent_max$n_catastrophes, " de catastrophes.\n")
 
 # HYPOTHESE 2 : Le type 'storm' est la catastrophe la plus présente
 
@@ -28,13 +26,11 @@ nombre_type <- aggregate(
 
 nombre_type <- nombre_type[order(-nombre_type$n_occurrences), ]
 
-cat("Nombre d'entrée par type de catastrophe\n")
+cat("Nombre d'entrée par catastrophe\n")
 print(nombre_type)
-cat("\n")
 
 type_max <- nombre_type[1, ]
-cat("Type le plus présent :", type_max$disastertype,
-    "avec", type_max$n_occurrences, "\n")
+cat("Type le plus présent :", type_max$disastertype, type_max$n_occurrences, "\n")
 
 # H1 : L’Asie est le continent ayant le plus de catastrophes
 if (continent_max$continent == "Asia") {

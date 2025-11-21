@@ -1,4 +1,4 @@
-# GeoNames cities500.txt
+# Download de GeoNames cities500 pour pouvoir faire script location-adm1
 
 dir.create("geonames_data")
 
@@ -13,9 +13,9 @@ download.file(URL, ZIP, mode = "wb")
 unzip(ZIP, exdir = "geonames_data", overwrite = TRUE)
 
 # Lecture
-cities <- read.delim(TXT, header = FALSE, sep = "\t", quote = "", stringsAsFactors = FALSE)
+cities <- read.delim(TXT, header = FALSE, sep = "\t", quote = "")
 
-# Colonne nécessaire à la base de données
+# Colonne nécessaire à la base de données après vérification
 cities_uniformisation <- cities[, c(1, 3, 9, 11)]
 names(cities_uniformisation) <- c("V1", "V3", "V9", "V11")
 
