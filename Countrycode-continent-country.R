@@ -18,9 +18,8 @@ lignes_valide <- !is.na(pays_uniformisés) & nzchar(pays_uniformisés)
 données$country[lignes_valide] <- pays_uniformisés[lignes_valide]
 
 # Correction des continents manquants après essaie
-correction_continent <- c(
-  "Kosovo" = "Europe"
-)
+correction_continent <- c("Kosovo" = "Europe")
+
 données$continent <- countrycode(
   sourcevar    = données$country,
   origin       = "country.name",

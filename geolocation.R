@@ -17,8 +17,6 @@ geolocation_arcgis <- function(vecteur_adresses, Nb_tentatives = 3, pause_base =
     resultat <- tryCatch(
       geo(address = vecteur_adresses, method = "arcgis", limit = 1, quiet = TRUE),
       error = function(e) {
-        message(sprintf("Erreur ArcGIS (tentative %d/%d) : %s",
-                        tentative, Nb_tentatives, conditionMessage(e)))
         NULL
       }
     )
@@ -39,39 +37,27 @@ if (length(colonnes_manquantes)) {
        paste(colonnes_manquantes, collapse = ", "))
 }
 
-# Correction de kpk dans base de données pour vrai nom
-corriger_kpk <- function(valeur) {
+corriger_regions <- function(valeur) {
+# Pakistan
   valeur <- gsub("(?i)\\bN\\.?\\s*W\\.?\\s*F\\.?\\s*P\\.?\\b",
                  "Khyber Pakhtunkhwa", valeur, perl = TRUE)
   valeur <- gsub("(?i)\\bF\\.?\\s*A\\.?\\s*T\\.?\\s*A\\.?\\b",
                  "Khyber Pakhtunkhwa", valeur, perl = TRUE)
-  valeur
-}
-
-base_de_données$adm1     <- corriger_kpk(base_de_données$adm1)
-base_de_données$location <- corriger_kpk(base_de_données$location)
-
-corriger_philippines <- function(valeur) {
   
-  # 1) Region "viii" → Eastern Visayas
+# Philippines
   valeur <- gsub("(?i)^viii$", "Eastern Visayas", valeur)
-  
-  # 2) "occ mindoro" → Occidental Mindoro
   valeur <- gsub("(?i)^occ mindoro$", "Occidental Mindoro", valeur)
-  
-  # 3) "and bislig" → bislig
   valeur <- gsub("(?i)^and bislig$", "bislig", valeur)
   
   valeur
 }
 
-# Appliquer aux deux colonnes
-base_de_données$location <- corriger_philippines(base_de_données$location)
-base_de_données$adm1     <- corriger_philippines(base_de_données$adm1)
+# corriger
+base_de_données$adm1     <- corriger_regions(base_de_données$adm1)
+base_de_données$location <- corriger_regions(base_de_données$location)
 
 adresses_completes <- nettoyer_adresse(
-  paste(base_de_données$location, base_de_données$adm1, base_de_données$country, sep = ", ")
-)
+  paste(base_de_données$location, base_de_données$adm1, base_de_données$country, sep = ", "))
 
 adresses_uniques <- unique(adresses_completes)
 
@@ -80,7 +66,7 @@ nb_lots <- ceiling(nb_total / Taille_lot)
 resultats_lots <- vector("list", nb_lots)
 
 ancien_timeout <- getOption("timeout")
-options(timeout = max(600, ancien_timeout))
+options(timeout = max(500, ancien_timeout))
 
 for (i in seq_len(nb_lots)) {
   debut <- (i - 1) * Taille_lot + 1
@@ -104,6 +90,5 @@ write.csv(base_de_données, sortie, row.names = FALSE, fileEncoding = "UTF-8")
 nb_coordonnees <- sum(!is.na(base_de_données$geolocation))
 nb_vide <- sum(is.na(base_de_données$geolocation))
 
-cat("Géocodage terminé avec ArcGIS.\n")
 cat("Coordonnées trouvées :", nb_coordonnees, "\n")
 cat("Coordonnées manquantes :", nb_vide, "\n")

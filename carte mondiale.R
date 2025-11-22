@@ -17,10 +17,9 @@ coordonnees <- extraire_coordonnees_simple(base_de_donnees$geolocation)
 base_de_donnees$latitude  <- coordonnees$lat
 base_de_donnees$longitude <- coordonnees$lon
 
-# Fond de carte
+# carte
 monde <- map_data("world")
 
-# thème carte
 theme_carte <- theme_void() +
   theme(
     legend.position = "bottom",
