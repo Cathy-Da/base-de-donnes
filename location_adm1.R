@@ -8,9 +8,7 @@ base_de_données <- read.csv(entrée, check.names = FALSE, fileEncoding = "UTF-8
 villes <- readRDS(villes)
 
 # Uniformiser les colonnes pour la jointure
-uniformisation <- function(x) {
-  tolower(trimws(x))
-}
+uniformisation <- function(x) {tolower(trimws(x))}
 
 # clés nasa disaster
 base_de_données$key_loc <- uniformisation(base_de_données$location)

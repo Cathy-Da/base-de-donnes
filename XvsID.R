@@ -2,7 +2,6 @@ source("Packages.R")
 
 entrée  <- "nasa_disaster_correction.csv"
 sortie  <- "nasa_disaster_correction.csv"
-
 données <- read.csv(entrée, check.names = FALSE, fileEncoding = "UTF-8")
 
 # Renommer colonne 1 en id et supprimer la colonne 2

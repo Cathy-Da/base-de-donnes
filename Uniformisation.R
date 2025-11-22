@@ -1,17 +1,12 @@
 source("Packages.R")
 
 # Lire en UTF-8 pour éviter les erreurs
-base_de_données <- read.csv(
-  "nasa_disaster_dataset.csv",
-  fileEncoding = "UTF-8",
-  check.names = FALSE
-)
+base_de_données <- read.csv("nasa_disaster_dataset.csv", fileEncoding = "UTF-8", check.names = FALSE)
 
 # Nettoyage des caractères illisibles
 nettoyer_caractères_illisibles <- function(valeur) {
   if (!is.character(valeur)) return(valeur)
   caractères_illisibles <- valeur
-  
   caractères_illisibles <- gsub("\u00A0", " ", caractères_illisibles, fixed = TRUE)
   caractères_illisibles <- gsub("Ã", "", caractères_illisibles, fixed = TRUE)
   caractères_illisibles <- gsub("Â", "", caractères_illisibles, fixed = TRUE)
@@ -41,11 +36,5 @@ for (col in names(base_de_données)) {
 }
 
 # Sauvegarde
-write.csv(
-  base_de_données,
-  "nasa_disaster_correction.csv",
-  row.names = FALSE,
-  fileEncoding = "UTF-8"
-)
-
+write.csv(base_de_données, "nasa_disaster_correction.csv", row.names = FALSE, fileEncoding = "UTF-8")
 cat("Fichier : nasa_disaster_correction.csv\n")
