@@ -29,21 +29,21 @@ nombre_type <-nombre_type[order(nombre_type$n_occurrences), ]
 cat("Nombre d'entrée par catastrophe\n")
 print(nombre_type)
 
-type_max <-nombre_type[1, ]
+type_max <- nombre_type[nrow(nombre_type), ]
 cat("Type le plus présent:",type_max$disastertype, type_max$n_occurrences,"\n")
 
 # H1: L’Asie est le continent ayant le plus de catastrophes
 if (continent_max$continent =="Asia") {
-  cat("H1 : CONFIRMEE. L’Asie est le continent avec le plus de catastrophes)\n")
+  cat("H1: CONFIRMEE. L’Asie est le continent avec le plus de catastrophes\n")
 } else {
-  cat("H1 : NON CONFIRMEE. Le continent avec le plus de catastrophes est: ",
+  cat("H1: NON CONFIRMEE. Le continent avec le plus de catastrophes est: ",
       continent_max$continent, "\n")
 }
 
-# H2 : Le type storm est la catastrophe la plus présente
+# H2: Le type storm est la catastrophe la plus présente
 if (type_max$disastertype == "storm") {
-  cat("H2 : CONFIRMEE (Le type 'storm' est bien le plus fréquent)\n")
+  cat("H2: CONFIRMEE. Le type storm est bien le plus fréquent\n")
 } else {
-  cat("H2 : NON CONFIRMEE — Le type de catastrophe le plus fréquent est : ",
+  cat("H2: NON CONFIRMEE. Le type de catastrophe le plus fréquent est: ",
       type_max$disastertype, "\n")
 }
