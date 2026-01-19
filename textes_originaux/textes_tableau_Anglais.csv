@@ -1,0 +1,1770 @@
+id_texte,titre,texte_contenu
+2,Help:Displaying_a_formula,"There are three methods for displaying formulas in Wikipedia: raw HTML, HTML with math templates (abbreviated here as {{math}}), and a subset of LaTeX implemented with the HTML markup <math></math> (referred to as LaTeX in this article). Each method has some advantages and some disadvantages, which have evolved over time with improvements of MediaWiki. The manual of style MOS:MATH has not always evolved accordingly. So the how-to recommendations that appear below may differ from those of the manual of style. In this case, they express a consensus resulting of the practice of most experienced members of WikiProject Mathematics and many discussions at Wikipedia talk:WikiProject Mathematics. 
+For example, the famous Einstein formula can be entered in raw HTML as {{nowrap|''E'' {{=}} ''mc''<sup>2</sup>}}, which is rendered as E = mc2 (the template {{nowrap}} is here only for avoiding a line break inside the formula). With {{math}}, it can be entered as {{math|''E'' {{=}} ''mc''{{sup|2}}}}, which is rendered as E = mc2. With LaTeX, it is entered as <math>E=mc^2</math>, and rendered as 
+  
+    
+      
+        E
+        =
+        m
+        
+          c
+          
+            2
+          
+        
+      
+    
+    {\displaystyle E=mc^{2}}
+  
+.
+
+Variable names and many symbols look very different with raw HTML and the other display methods. This may be confusing in the common case where several methods are used in the same article. Moreover, mathematicians who are used to reading and writing texts written with LaTeX often find the raw HTML rendering awful. 
+So, raw HTML should normally not be used for new content. However, raw HTML is still present in many mathematical articles. It is generally a good practice to convert it to {{math}} format, but coherency must be respected; that is, such a conversion must be done in a whole article, or at least in a whole section. Moreover, such a conversion must be identified as such in the edit summary, and making other changes in the same edit should be avoided. This is for helping other users to identify changes that are possibly controversial (the ""diff"" of a conversion may be very large, and may hide other changes).
+Converting raw HTML to {{math}} is rather simple: when the formula is enclosed with {{nowrap}}, it suffices to change ""nowrap"" into ""math"". However, if the formula contains an equal sign, one has to add 1= just before the formula for avoiding confusion with the template syntax; for example, {{math|1=''E'' = ''mc''{{sup|2}}}}. Also, vertical bars, if any, must either be replaced with {{!}} or avoided by using {{abs}}.
+
+These two ways of writing mathematical formulas each have their advantages and disadvantages. They are both accepted by the manual of style MOS:MATH. The rendering of variable names is very similar. Having a variable name displayed in the same paragraph with {{math}} and <math> is generally not a problem.
+The disadvantages of LaTeX are the following:
+On some browser configurations, LaTeX inline formulas appear with a slight vertical misalignment, or with a font size that may be slightly different from that of the surrounding text. This is not a problem with a block displayed formula, and also typically not with inline formulas that exceed the normal line height marginally (for example formulas with subscripts and superscripts). 
+The use of LaTeX in a piped link or in a section heading does not appear in blue in the linked text or the table of content. Moreover, links to section headings containing LaTeX formulas do not always work as expected.
+Finally, having many LaTeX formulas may significantly increase the processing time of a page. LaTeX formulas should be avoided in image captions or footnotes, because when the image is clicked for a larger display or a footnote is selected on a mobile device, LaTeX in the caption or footnote will not render.
+Disadvantages of {{math}} include that not all formulas can be displayed, and while it may be possible to display a complicated formula with {{math}}, it may be poorly rendered. Except for the most common symbols such as letters, numerals, and basic punctuation, rendering of Unicode mathematical symbols can be inconsistent in size or alignment where fallback fonts do not match, and some readers may not have any font which includes certain uncommon symbols. Spaces within a formula must be directly managed (for example by including explicit hair or thin spaces). Variable names must be italicized explicitly, and superscripts and subscripts must use an explicit tag or template. Except for short formulas, the source of a formula typically has more markup overhead and can be difficult to read.
+The common practice of most members of WikiProject mathematics is the following:
+
+Use of {{mvar}} and {{math}} for isolated variables and {{math}} for simple inline formulas; or alternately the use of LaTeX for these purposes (optionally using the {{tmath}} template), especially on articles with many complex formulas or where rendering seems inconsistent
+Use of {{mvar}} and {{math}} for formulas in image captions, even if the rendering is mediocre
+Use of LaTeX for separately displayed formulas and more complicated inline formulas
+Use of LaTeX for formulas involving symbols that are not regularly rendered in Unicode (see MOS:BBB)
+Avoid formulas in section headings, and when this is necessary, use raw HTML (see Finite field for an example)
+The choice between {{math}} and LaTeX depends on the editor. Converting a page from one format to another must be done with stronger reasons than editor preference.
+
+
+=== Display format of LaTeX ===
+By default SVG images with non-visible MathML are generated. The text-only form of the LaTeX can be set via user preferences at My Preferences – Appearance – Math.
+The hidden MathML can be used by screen readers and other assistive technology. To display the MathML in Firefox:
+
+Install the Native MathML extension
+Or copy its CSS rules to your Wikipedia user stylesheet.
+In either case, you must have fonts that support MathML (see developer.mozilla.org) installed on your system. For copy-paste support in Firefox, you can also install MathML Copy.
+
+TeX markup is not the only way to render mathematical formulas. For simple inline formulas, the template {{math}} and its associated templates are often preferred. The following comparison table shows that similar results can be achieved with the two methods. See also Help:Special characters.
+
+Here is a summary of the mathematical templates:
+
+Care should be taken when writing sets within {{math}}, as braces, equal signs, and vertical bars can conflict with template syntax.  The {{mset}} template is available for braces, as shown in the example above. Likewise, {{abs}} encloses its parameter inside vertical bars to help with the pipe character conflicting with template syntax. For a single vertical bar, use {{!}}, and for an equal sign, use {{=}}.
+
+
+=== HTML entities ===
+Though Unicode characters are generally preferred, sometimes HTML entities are needed to avoid problems with wiki syntax or confusion with other characters:
+
+In the table below, the codes on the left produce the symbols on the right, but these symbols can also be entered directly in the wikitext either by typing them if they are available on the keyboard, by copy-pasting them, or by using menus below the edit windows. (When editing any Wikipedia page in a desktop web browser, use the ""Insert"" pulldown menu immediately below the article text, or the ""Special characters"" menu immediately above the article text.) Normally, lowercase Greek letters should be entered in italics, that is, enclosed between two single quotes ('').
+
+
+=== Superscripts and subscripts ===
+
+
+=== Spacing ===
+To avoid line-wrapping in the middle of a formula, use {{math}}. If necessary, a non-breaking space ( ) can be inserted with ""&nbsp;"". When an inline formula is long enough, it can be helpful to allow it to break across lines. Whether using LaTeX or templates, split the formula at each acceptable breakpoint into separate <math> tags or {{math}} templates with any binary relations or operators and intermediate whitespace included at the trailing rather than leading end of a part.
+Typically whitespace should be a regular space ( ) or none at all. In rare circumstances, such as where one character overlaps another due to one being in italics, a thin space can be added with {{thin space}}.
+
+
+=== More ===
+For more on Wikipedia howtos and math style guidelines:
+
+MOS:FRAC for how to input fractions in various circumstances
+MOS:RADICAL for how to square and other roots in various circumstances
+Per MOS:ELLIPSIS, ""..."" (three ASCII periods) is used instead of ""…"" (single character)
+Arrow (symbol) § Arrows in Unicode
+Mathematical operators and symbols in Unicode
+Wikipedia:Manual of Style (mathematics)
+For more on special characters:
+
+Unicode character name index can be used to find the Unicode number of a character.
+W3C list of MathML characters indexed by code or name
+List of XML and HTML character entity references – includes all named entities
+Glossary of mathematical symbols
+
+Math markup goes inside <math>...</math>. Chemistry markup goes inside <math chem>...</math> or <chem>...</chem>. {{tmath|...}} can be used in place of <math>...</math> to avoid line wrapping of adjacent text (with caveats). All these tags use TeX.
+The TeX code has to be put literally: MediaWiki templates, predefined templates, and parameters cannot be used within math tags: pairs of double braces are ignored and ""#"" gives an error message. However, math tags work in the then and else part of #if, etc. See m:Template:Demo of attempt to use parameters within TeX (backlinks edit) for more information.
+The now deprecated tag <ce> was considered too ambiguous, and it has been replaced by <chem>. 
+
+
+=== LaTeX commands ===
+LaTeX commands are case-sensitive, and take one of the following two formats:
+
+They start with a backslash \ and then have a name consisting of letters only. Command names are terminated by a space, a number or any other ""non-letter"" character.
+They consist of a backslash \ and exactly one non-letter.
+Some commands need an argument, which has to be given between curly braces {} after the command name. Some commands support optional parameters, which are added after the command name in square brackets []. The general syntax is:
+
+\commandname[option1,option2,...]{argument1}{argument2}...
+
+
+=== Special characters ===
+The following symbols are reserved characters that either have a special meaning under LaTeX or are unavailable in all the fonts. If you enter them directly in your text, they will normally not render, but rather do things you did not intend.
+
+# $ % ^ & _ { } ~ \
+
+These characters can be entered by prefixing the escape character backslash \ or using special sequences:
+
+\# \$ \% ^\wedge \& \_ \{ \} \sim \backslash
+
+yielding:
+
+The backslash character \ can not be entered by adding another backslash in front of it (\\); this sequence is used for line breaking. For introducing a backslash in math mode, you can use \backslash instead which gives 
+  
+    
+      
+        ∖
+      
+    
+    {\displaystyle \backslash }
+  
+.
+The command \tilde produces a tilde which is placed over the next letter. For example, \tilde{a} gives 
+  
+    
+      
+        
+          
+            
+              a
+              ~
+            
+          
+        
+      
+    
+    {\displaystyle {\tilde {a}}}
+  
+. To produce just a tilde character ~, use \tilde{\ } which gives 
+  
+    
+      
+        
+          
+            
+               
+              ~
+            
+          
+        
+      
+    
+    {\displaystyle {\tilde {\ }}}
+  
+, placing a ~ over an empty box. Alternatively \sim produces 
+  
+    
+      
+        ∼
+      
+    
+    {\displaystyle \sim }
+  
+, a large centred ~ which may be more appropriate in some situations.
+The command \hat produces a hat over the next character, for example \hat{o} produces 
+  
+    
+      
+        
+          
+            
+              o
+              ^
+            
+          
+        
+      
+    
+    {\displaystyle {\hat {o}}}
+  
+. For a stretchable version, use \widehat{abc} giving 
+  
+    
+      
+        
+          
+            
+              
+                a
+                b
+                c
+              
+              ^
+            
+          
+        
+      
+    
+    {\displaystyle {\widehat {abc}}}
+  
+. The wedge \wedge is normally used as a mathematical operator 
+  
+    
+      
+        ∧
+      
+    
+    {\displaystyle \wedge }
+  
+. The sequence {}^\wedge produces 
+  
+    
+      
+        
+          
+
+          
+          
+            ∧
+          
+        
+      
+    
+    {\displaystyle {}^{\wedge }}
+  
+ the best equivalent to the ASCII caret ^ character.
+
+
+=== Spaces ===
+""Whitespace"" characters, such as blank or tab, are treated uniformly as ""space"" by LaTeX. Several consecutive whitespace characters are treated as one ""space"". See below for commands that produces spaces of different size.
+
+
+=== LaTeX environments ===
+Environments in LaTeX have a role that is quite similar to commands, but they usually have effect on a wider part of formula. Their syntax is:
+
+Environments supported by Wikipedia include matrix, align, etc. See below.
+
+
+=== Rendering ===
+The font sizes and types are independent of browser settings or CSS. Font sizes and types will often deviate from what HTML renders. Vertical alignment with the surrounding text can also be a problem; a work-around is described in the ""Alignment with normal text flow"" section below. The CSS selector of the images is img.tex.
+Apart from function and operator names, as is customary in mathematics, variables and letters are in italics; digits are not. For other text, (like variable labels) to avoid being rendered in italics like variables, use \text or \mathrm (formerly \rm). You can also define new function names using \operatorname{...}. For example, \text{abc} gives 
+  
+    
+      
+        
+          abc
+        
+      
+    
+    {\displaystyle {\text{abc}}}
+  
+. \operatorname{...} provides spacing before and after the operator name when appropriate, as when a\operatorname{sn}b is rendered as 
+  
+    
+      
+        a
+        sn
+        ⁡
+        b
+      
+    
+    {\displaystyle a\operatorname {sn} b}
+  
+ (with space to the left and right of ""sn"") and a\operatorname{sn}(b+c) as 
+  
+    
+      
+        a
+        sn
+        ⁡
+        (
+        b
+        +
+        c
+        )
+      
+    
+    {\displaystyle a\operatorname {sn} (b+c)}
+  
+ (with space to the left and not to the right). LaTeX's starred version, \operatorname* is not supported, but a workaround is to add \limits instead. For example, \operatorname{sn}_{b>c}(b+c) \qquad \operatorname{sn}\limits_{b>c}(b+c) renders as
+
+  
+    
+      
+        
+          sn
+          
+            b
+            >
+            c
+          
+        
+        ⁡
+        (
+        b
+        +
+        c
+        )
+        
+        
+          sn
+          
+            b
+            >
+            c
+          
+        
+        ⁡
+        (
+        b
+        +
+        c
+        )
+      
+    
+    {\displaystyle \operatorname {sn} _{b>c}(b+c)\qquad \operatorname {sn} \limits _{b>c}(b+c)}
+  
+.
+LaTeX does not have full support for Unicode characters, and not all characters render. Most Latin characters with accents render correctly. However some do not, in particular those that include multiple diacritics (e.g. with Latin letters used in Vietnamese) or that cannot be precomposed into a single character (such as the uppercase Latin letter W with ring), or that use other diacritics (like the ogonek or the double grave accent, used in Central European languages like Polish, or the horn attached above some vowels in Vietnamese), or other modified letter forms (used in IPA notations, or African languages, or in medieval texts), some digram ligatures (like Ĳ in Dutch), or Latin letters borrowed from Greek, or small capitals, as well as superscripts and subscript letters. For example, \text{ð} and \text{þ} (used in Icelandic) will give errors.
+The normal way of entering quotation marks in text mode (two back ticks for the left and two apostrophes for the right), such as \text{a ``quoted'' word} will not work correctly. As a workaround, you can use the Unicode left and right quotation mark characters, which are available from the ""Symbols"" dropdown panel beneath the editor: \text{a “quoted” word}.
+
+
+==== Force-rerendering of formulas ====
+MediaWiki stores rendered formulas in a cache so that the images of those formulas do not need to be created each time the page is opened by a user. To force the rerendering of all formulas of a page, you must open it with the getter variables action=purge&mathpurge=true. Imagine for example there is a wrong rendered formula in the article Integral. To force the re-rendering of this formula you need to open the URL 
+https://en.wikipedia.org/w/index.php?title=Integral&action=purge&mathpurge=true
+Afterwards you need to bypass your browser cache so that the new created images of the formulas are actually downloaded.
+
+
+=== Functions, symbols, special characters ===
+
+For a little more semantics on these symbols, see this brief TeX Cookbook or here TeX Cookbook.
+
+
+=== Larger expressions ===
+
+
+==== Subscripts, superscripts, integrals ====
+
+
+=== Fractions, matrices, multilines ===
+
+
+=== Parenthesizing big expressions, brackets, bars ===
+
+You can use various delimiters with \left and \right:
+
+
+=== Display attribute ===
+The <math> tag can take a display attribute with possible values of inline and block.
+
+
+==== Inline ====
+If the value of the display attribute is inline, the contents will be rendered in inline mode: there will be no new paragraph for the equation and the operators will be rendered to consume only a small amount of vertical space.
+The sum 
+  
+    
+      
+        
+          ∑
+          
+            i
+            =
+            0
+          
+          
+            ∞
+          
+        
+        
+          2
+          
+            −
+            i
+          
+        
+      
+    
+    {\textstyle \sum _{i=0}^{\infty }2^{-i}}
+  
+ converges to 2.
+The next line-width is not disturbed by large operators.
+The code for the math example reads:
+
+<math display=""inline"">\sum_{i=0}^\infty 2^{-i}</math>
+The quotation marks around inline are optional and display=inline is also valid.
+Technically, the command \textstyle will be added to the user input before the TeX command is passed to the renderer. The result will be displayed without further formatting by outputting the image or MathML element to the page.
+
+
+==== Block ====
+In block-style the equation is rendered in its own paragraph and the operators are rendered consuming less horizontal space. The equation is indented.
+The sum 
+  
+    
+      
+        
+          ∑
+          
+            i
+            =
+            0
+          
+          
+            ∞
+          
+        
+        
+          2
+          
+            −
+            i
+          
+        
+      
+    
+    {\displaystyle \sum _{i=0}^{\infty }2^{-i}}
+  
+ converges to 2.
+It was entered as
+
+<math display=""block"">\sum_{i=0}^\infty 2^{-i}</math>
+Technically, the command \displaystyle will be added to the user input (if the user input does not already contain the string \displaystyle or \align) before the TeX command is passed to the renderer. The result will be displayed in a new paragraph.
+Therefore, the style of the MathImage is altered, i.e. the style attribute ""display:block;margin:auto"" is added.
+For MathML it is ensured that display=inline is replaced by display block which produces a new paragraph
+
+
+==== Not specified ====
+If nothing is specified, the equation is rendered in the same display style as ""block"", but without using a new paragraph. If the equation does appear on a line by itself, it is not automatically indented.
+The sum 
+  
+    
+      
+        
+          ∑
+          
+            i
+            =
+            0
+          
+          
+            ∞
+          
+        
+        
+          2
+          
+            −
+            i
+          
+        
+      
+    
+    {\displaystyle \sum _{i=0}^{\infty }2^{-i}}
+  
+ converges to 2.
+The next line-width is disturbed by large operators.
+Or:
+The sum
+
+  
+    
+      
+        
+          ∑
+          
+            i
+            =
+            0
+          
+          
+            ∞
+          
+        
+        
+          2
+          
+            −
+            i
+          
+        
+      
+    
+    {\displaystyle \sum _{i=0}^{\infty }2^{-i}}
+  
+
+converges to 2.
+In both cases, the math is coded as:
+
+<math>\sum_{i=0}^\infty 2^{-i}</math>
+
+
+=== Equation numbering ===
+
+The templates {{NumBlk}} and {{EquationRef}} can be used to number equations. The template {{EquationNote}} can be used to refer to a numbered equation from surrounding text. For example, the following syntax:
+
+{{NumBlk|:|<math>x^2 + y^2 + z^2 = 1</math>|{{EquationRef|1}}}}
+produces the following result (note the equation number in the right margin):
+
+Later on, the text can refer to this equation by its number using syntax like this:
+
+As seen in equation ({{EquationNote|1}}), example text...
+The result looks like this:
+
+As seen in equation (1), example text...
+The equation number produced by {{EquationNote}} is a link that the user can click to go immediately to the cited equation.
+
+
+=== Alphabets and typefaces ===
+
+Texvc cannot render arbitrary Unicode characters. Those it can handle can be entered by the expressions below. For others, such as Cyrillic, they can be entered as Unicode or HTML entities in running text, but cannot be used in displayed formulas.
+
+
+==== Mixed text faces ====
+
+
+=== Color ===
+Equations can use color with the \color command. For example,
+
+The \color command colors all symbols to its right. 
+However, if the \color command is enclosed in a pair of braces (e.g. {\color{Red}...}) then no symbols outside of those braces are affected.
+
+There are several alternate notations styles
+
+Some color names are predeclared according to the following table, you can use them directly for the rendering of formulas (or for declaring the intended color of the page background).
+
+Color should not be used as the only way to identify something, because it will become meaningless on black-and-white media or for color-blind people. See WP:Manual of Style (accessibility)#Color.
+Latex does not have a command for setting the background color. The most effective way of setting a background color is by setting a CSS styling rule for a table cell:
+
+Rendered as:
+
+Custom colors can be defined using:
+
+  
+    
+      
+        
+          
+            e
+            
+              i
+              π
+            
+          
+          
+            +
+            1
+            =
+            0
+          
+        
+      
+    
+    {\displaystyle \definecolor {myorange}{rgb}{1,0.65,0.4}\color {myorange}e^{i\pi }\color {Black}+1=0}
+  
+
+
+=== Formatting issues ===
+
+
+==== Spacing ====
+
+TeX handles most spacing automatically, but you may sometimes want manual control.
+
+Automatic spacing may be broken in very long expressions (because they produce an overfull hbox in TeX):
+
+0+1+2+3+4+5+6+7+8+9+10+11+12+13+14+15+16+17+18+19+20+\cdots
+
+  
+    
+      
+        0
+        +
+        1
+        +
+        2
+        +
+        3
+        +
+        4
+        +
+        5
+        +
+        6
+        +
+        7
+        +
+        8
+        +
+        9
+        +
+        10
+        +
+        11
+        +
+        12
+        +
+        13
+        +
+        14
+        +
+        15
+        +
+        16
+        +
+        17
+        +
+        18
+        +
+        19
+        +
+        20
+        +
+        ⋯
+      
+    
+    {\displaystyle 0+1+2+3+4+5+6+7+8+9+10+11+12+13+14+15+16+17+18+19+20+\cdots }
+  
+
+This can be remedied by putting a pair of braces { } around the whole expression:
+
+{0+1+2+3+4+5+6+7+8+9+10+11+12+13+14+15+16+17+18+19+20+\cdots}
+
+  
+    
+      
+        
+          0
+          +
+          1
+          +
+          2
+          +
+          3
+          +
+          4
+          +
+          5
+          +
+          6
+          +
+          7
+          +
+          8
+          +
+          9
+          +
+          10
+          +
+          11
+          +
+          12
+          +
+          13
+          +
+          14
+          +
+          15
+          +
+          16
+          +
+          17
+          +
+          18
+          +
+          19
+          +
+          20
+          +
+          ⋯
+        
+      
+    
+    {\displaystyle {0+1+2+3+4+5+6+7+8+9+10+11+12+13+14+15+16+17+18+19+20+\cdots }}
+  
+
+When relational symbols such as 
+  
+    
+      
+        ↑
+      
+    
+    {\displaystyle \uparrow }
+  
+ are employed as ordinary symbols, for example in bra–ket notation, additional spacing may have to be avoided:
+
+
+===== Empty horizontal or vertical spacing =====
+The phantom commands create empty horizontal and/or vertical space the same height and/or width of the argument.
+
+
+==== Alignment with normal text flow ====
+Because of the default CSS
+
+an inline expression like 
+  
+    
+      
+        
+          ∫
+          
+            −
+            N
+          
+          
+            N
+          
+        
+        
+          e
+          
+            x
+          
+        
+        
+        d
+        x
+      
+    
+    {\displaystyle \int _{-N}^{N}e^{x}\,dx}
+  
+ should look good.
+If you need to align it otherwise, use <math style=""vertical-align:-100%;"">...</math> and play with the vertical-align argument until you get it right; however, how it looks may depend on the browser and the browser settings.
+If you rely on this workaround, if and when the rendering on the server gets fixed in a future release, this extra manual offset will suddenly make every affected formula align incorrectly. So use it sparingly, if at all.
+
+
+=== Unimplemented elements and workarounds ===
+The current Mathoid–MathJax backend has the following elements unimplemented (see also MathJax's own description of differences):
+
+
+==== Special integral operators ====
+The following integral operators that are not supported by the default font of MathJax 2.7 are available
+
+they have poor horizontal spacing, generate cropped SVG images unless used with other tall characters, and appear different from the usual integral symbol \int:
+
+  
+    
+      
+        
+          
+            
+              ∯
+              
+            
+          
+          
+        
+        ,
+        
+          
+            
+              ∰
+              
+            
+          
+          
+        
+        ,
+        
+          
+            
+              ∳
+              
+            
+          
+          
+        
+        ,
+        
+          
+            
+              ∲
+              
+            
+          
+          
+        
+        ,
+        
+          
+            
+              ⨍
+              
+            
+          
+          
+        
+        ,
+        
+          
+            
+              ⨎
+              
+            
+          
+          
+        
+        ,
+      
+    
+    {\displaystyle \oiint ,\oiiint ,\ointctrclockwise ,\varointclockwise ,\intbar ,\intBar ,}
+  
+
+cf. phab:T348587. However, they render fine  when MathML is used.
+
+
+==== \oiint and \oiiint ====
+Elements which are not yet implemented are \oiint, namely a two-fold integral \iint (
+  
+    
+      
+        ∬
+      
+    
+    {\displaystyle \iint }
+  
+) with a circular curve through the centre of the two integrals, and similarly \oiiint, a circular curve through three integrals. In contrast, \oint (
+  
+    
+      
+        ∮
+      
+    
+    {\displaystyle \oint }
+  
+) exists for the single dimension (integration over a curved line within a plane or any space with higher dimension).
+These elements appear in many contexts: \oiint denotes a surface integral over the closed 2d boundary of a 3d region (which occurs in much of 3d vector calculus and physical applications – like Maxwell's equations), likewise \oiiint denotes integration over the closed 3d boundary (surface volume) of a 4d region, and they would be strong candidates for the next TeX version. As such there are a lot of workarounds in the present version.
+
+However, since no standardisation exists as yet, any workaround like this (which uses many \! symbols for backspacing) should be avoided, if possible. See below for a possibility using PNG image enforcement.
+Note that \iint (the double integral) and \iiint (the triple integral) are still not kerned as they should preferably be, and are currently rendered as if they were successive \int symbols; this is not a major problem for reading the formulas, even if the integral symbols before the last one do not have bounds, so it's best to avoid backspacing ""hacks"" as they may be inconsistent with a possible future better implementation of integrals symbols (with more precisely computed kerning positions).
+
+
+===== \oiint and \oiiint as PNG images =====
+These symbols are available as PNG images which are also integrated into two templates, {{oiint}} and {{oiiint}}, which take care of the formatting around the symbols.
+The templates have three parameters:
+
+preintegral
+the text or formula immediately before the integral
+intsubscpt
+the subscript below the integral
+integrand
+the text or formula immediately after the integral
+
+
+====== Examples ======
+Stokes' theorem: {{oiint | intsubscpt=<math>\scriptstyle S</math> | integrand=<math>( \nabla \times \mathbf{F} ) \cdot {\mathrm d}\mathbf{S} = \oint_{\partial S} \mathbf{F} \cdot {\mathrm d}\boldsymbol{\ell}</math>}}
+ 
+  
+    
+      
+        
+          S
+        
+      
+    
+    {\displaystyle \scriptstyle S}
+  
+ 
+  
+    
+      
+        (
+        ∇
+        ×
+        
+          F
+        
+        )
+        ⋅
+        
+          
+            d
+          
+        
+        
+          S
+        
+        =
+        
+          ∮
+          
+            ∂
+            S
+          
+        
+        
+          F
+        
+        ⋅
+        
+          
+            d
+          
+        
+        
+          ℓ
+        
+      
+    
+    {\displaystyle (\nabla \times \mathbf {F} )\cdot {\mathrm {d} }\mathbf {S} =\oint _{\partial S}\mathbf {F} \cdot {\mathrm {d} }{\boldsymbol {\ell }}}
+  
+
+Ampère's law + correction: {{oiint  | preintegral=<math>\oint_C \mathbf{B} \cdot {\mathrm d} \boldsymbol{\ell} = \mu_0 </math> | intsubscpt = <math>{\scriptstyle S}</math> | integrand = <math>\left ( \mathbf{J} + \epsilon_0\frac{\partial \mathbf{E}}{\partial t} \right ) \cdot {\mathrm d}\mathbf{S}</math> }}
+
+  
+    
+      
+        
+          ∮
+          
+            ∂
+            S
+          
+        
+        
+          B
+        
+        ⋅
+        
+          
+            d
+          
+        
+        
+          ℓ
+        
+        =
+        
+          μ
+          
+            0
+          
+        
+      
+    
+    {\displaystyle \oint _{\partial S}\mathbf {B} \cdot {\mathrm {d} }{\boldsymbol {\ell }}=\mu _{0}}
+  
+ 
+  
+    
+      
+        
+          
+            S
+          
+        
+      
+    
+    {\displaystyle {\scriptstyle S}}
+  
+ 
+  
+    
+      
+        
+          (
+          
+            
+              J
+            
+            +
+            
+              ϵ
+              
+                0
+              
+            
+            
+              
+                
+                  ∂
+                  
+                    E
+                  
+                
+                
+                  ∂
+                  t
+                
+              
+            
+          
+          )
+        
+        ⋅
+        
+          
+            d
+          
+        
+        
+          S
+        
+      
+    
+    {\displaystyle \left(\mathbf {J} +\epsilon _{0}{\frac {\partial \mathbf {E} }{\partial t}}\right)\cdot {\mathrm {d} }\mathbf {S} }
+  
+
+Continuity of 4-momentum flux (in general relativity):{{oiiint | preintegral=<math>\mathbf{P} = </math> | intsubscpt=<math>\scriptstyle \partial \Omega</math> | integrand=<math>\mathbf{T} \cdot {\mathrm d}^3\boldsymbol{\Sigma}</math> <math>=0</math>}}
+
+  
+    
+      
+        
+          P
+        
+        =
+      
+    
+    {\displaystyle \mathbf {P} =}
+  
+ 
+  
+    
+      
+        
+          ∂
+          Ω
+        
+      
+    
+    {\displaystyle \scriptstyle \partial \Omega }
+  
+ 
+  
+    
+      
+        
+          T
+        
+        ⋅
+        
+          
+            
+              d
+            
+          
+          
+            3
+          
+        
+        
+          Σ
+        
+      
+    
+    {\displaystyle \mathbf {T} \cdot {\mathrm {d} }^{3}{\boldsymbol {\Sigma }}}
+  
+
+  
+    
+      
+        =
+        0
+      
+    
+    {\displaystyle =0}
+  
+
+
+===== Oriented \oiint and \oiiint as PNG images =====
+Some variants of \oiint and \oiiint have arrows on them to indicate the sense of integration, such as a line integral around a closed curve in the clockwise sense, and higher dimensional analogues. These are not implemented in TeX on Wikipedia either, although the template {{intorient}} is available - see link for details.
+
+
+==== Arc notation \overarc ====
+\overarc is not yet implemented to display the arc notation. However, there exists a workaround: use \overset{\frown}{AB}, which gives
+
+  
+    
+      
+        
+          
+            
+              A
+              B
+            
+            ⌢
+          
+        
+      
+    
+    {\displaystyle {\overset {\frown }{AB}}}
+  
+
+For longer arcs, use {{Overarc}}:
+3.142857
+
+
+==== Triple dot \dddot ====
+\dddot is not implemented. For a workaround use \overset{...}{x}, which gives
+
+  
+    
+      
+        
+          
+            x
+            
+              .
+              .
+              .
+            
+          
+        
+      
+    
+    {\displaystyle {\overset {...}{x}}}
+  
+.
+
+
+==== Starred operatorname \operatorname* ====
+The starred version of \operatorname is not currently supported. A workaround for
+
+ 
+is either
+
+or
+
+
+==== Strikethrough ====
+Strikethrough like \sout or \st is not implemented, nor is overlapping like \rlap.  This means struck characters like ƛ are difficult to type, except the hardcoded \hbar.  A workaround suffix for a normal strikethrough is q \!\!\!\frac{}{\ }, and for elevated strikethrough is \lambda \!\!\!^{{}^\underline{\ \ }}, which give
+
+  
+    
+      
+        q
+        
+        
+        
+        
+          
+            
+             
+          
+        
+        ,
+        
+        λ
+        
+        
+        
+          
+          
+            
+              
+
+              
+              
+                
+                  
+                     
+                     
+                  
+                  _
+                
+              
+            
+          
+        
+      
+    
+    {\displaystyle q\!\!\!{\frac {}{\ }},\quad \lambda \!\!\!^{{}^{\underline {\ \ }}}}
+  
+
+
+==== Formatting in \text ====
+Formatting in \text is not supported. In other words, you can't use:
+
+but have to use:
+
+More specifically, in Mathoid's MathJax, no processing is done to the contents of \text at all. The texvcjs component blocks the use of macros, but another way this behavior leaks through is in the processing of quotation marks, where the Unicode version must be used instead of `:
+
+  
+    
+      
+        
+          `failed ``ascii'' quotes'
+        
+        ,
+         
+        
+          ‘okay “unicode” quotes’
+        
+      
+    
+    {\displaystyle {\text{`failed ``ascii'' quotes'}},\ {\text{‘okay “unicode” quotes’}}}
+  
+
+It is currently impossible to get straight (typewriter) quotes in MathJax.
+
+
+==== Automatic line-breaking ====
+The current image-based implementation precludes automatic line-breaking of inline formulae after binary operators and ""="" as seen in TeX. The only workarounds are to not write long formulae inline, or to split the formula into separate parts at each acceptable break point.
+Readers wishing to enable automatic line-breaking can try to have the browser render the MathML itself or to use an alternate in-browser renderer.
+
+
+=== Syntax to avoid ===
+
+
+==== Unicode characters ====
+
+Non-ASCII Unicode characters like π work in MathML, but not in Mathoid (server-side MathJax in SVG/PNG mode, after validation by texvcjs). They should be avoided for maximum compatibility.
+MathJax itself supports Unicode characters in \text{}, but the texvcjs validator insists on blocking them (replicating old texvc behavior). A formal feature request and discussion is required to fix this.
+
+
+===== Invisible Unicode characters =====
+A rare but very frustrating cause of inexplicable syntax errors is invisible Unicode characters copied from some other source.  For example, the Windows Calculator includes Unicode Bidirectional text control characters in its output: U+202D (left-to-right override) at the beginning and U+202C (pop directional formatting) at the end.  These characters can be invisibly pasted into the Wikipedia editor, but will cause  messages from the LaTeX renderer, despite the source appearing to be correct.  It can usually be fixed by deleting and manually retyping the beginning and end of the pasted text.
+
+
+==== Deprecated syntax ====
+The texvc processor accepted some non-standard control sequences. These are now deprecated for Wikipedia use because the MathJax-based renderers do not support them.  This is part of an effort to update the math engine. 
+See mw:Extension:Math/Roadmap for details. A bot User:Texvc2LaTeXBot will replace this syntax on the English Wikipedia.
+
+There are three ways to render chemical sum formulas as used in chemical equations:
+
+<chem>...</chem> (<ce>...</ce> is a deprecated alias for it)
+<math chem>...</math>
+{{chem}} and {{chem2}}
+<chem>X</chem> is short for <math chem>\ce{X}</math>
+(where X is a chemical sum formula)
+Technically, <math chem> is a math tag with the extension mhchem enabled, according to the MathJax documentation.
+Wikipedia:Manual of Style/Chemistry advises avoiding the <chem> and <math chem> markup methods when possible.
+Note that the commands \cee and \cf are disabled, because they are marked as deprecated in the mhchem LaTeX package documentation.
+If the formula reaches a certain ""complexity"", spaces might be ignored (<chem>A + B</chem> might be rendered as if it were <chem>A+B</chem> with a positive charge). In that case, write <chem>A{} + B</chem> (and not <chem>{A} + {B}</chem> as was previously suggested). This will allow auto-cleaning of formulas once the bug is fixed and/or a newer version  of mhchem is available.
+Please note that there are still major issues with mhchem support in MediaWiki. Some issues can be solved by enabling the extension using <math chem> and formatting individual items with \ce. For example, 
+
+<math chem>\ce{pIC_{50}} = -\log_{10} \ce{(IC_{50})}</math>
+
+  
+    
+      
+        
+          
+            pIC
+            
+              50
+            
+            
+              
+            
+          
+        
+        =
+        −
+        
+          log
+          
+            10
+          
+        
+        ⁡
+        
+          
+            (
+            
+              IC
+              
+                50
+              
+              
+                
+              
+            
+            )
+          
+        
+      
+    
+    {\displaystyle {\ce {pIC_{50}}}=-\log _{10}{\ce {(IC_{50})}}}
+  
+
+
+=== Molecular and condensed formula ===
+
+
+=== Bonds ===
+
+
+=== Charges ===
+
+
+=== Addition compounds and stoichiometric numbers ===
+
+
+=== Wiki linking ===
+
+
+=== (Italic) Math ===
+
+
+=== Oxidation states ===
+
+
+=== Greek characters ===
+
+
+=== Isotopes ===
+
+
+=== States ===
+Subscripting states is not an IUPAC recommendation.
+
+
+=== Precipitate and gas formation ===
+
+
+=== Reaction arrows ===
+
+
+==== Comparison of arrow symbols ====
+
+
+=== Further examples using ordinary LaTeX tags ===
+
+  
+    
+      
+        
+          
+            
+              
+                
+                  
+                    
+                      
+                        2
+                        
+                        
+                          Fe
+                          
+                            3
+                          
+                          
+                            
+                          
+                        
+                        
+                          O
+                          
+                            4
+                          
+                          
+                            
+                          
+                        
+                      
+                      ⏞
+                    
+                  
+                  
+                    magnetite
+                  
+                
+                +
+                
+                  
+                    
+                      1
+                      2
+                    
+                  
+                  
+                    O
+                    
+                      2
+                    
+                    
+                      
+                    
+                  
+                  ⟶
+                
+                 
+              
+              
+                
+                  
+                    
+                      
+                        
+                          
+                            3
+                            
+                            
+                              (
+                              λ
+                              
+                                
+                                  −
+                                
+                              
+                              
+                                Fe
+                                
+                                  2
+                                
+                                
+                                  
+                                
+                              
+                              
+                                O
+                                
+                                  3
+                                
+                                
+                                  
+                                
+                              
+                              )
+                            
+                          
+                          ⏞
+                        
+                      
+                      
+                        maghemite
+                      
+                    
+                  
+                
+              
+            
+            
+              
+                
+                  
+                    
+                      
+                        2
+                        
+                        
+                          Fe
+                          
+                            3
+                          
+                          
+                            
+                          
+                        
+                        
+                          O
+                          
+                            4
+                          
+                          
+                            
+                          
+                        
+                      
+                      ⏟
+                    
+                  
+                  
+                    magnetite
+                  
+                
+                +
+                
+                  
+                    
+                      1
+                      2
+                    
+                  
+                  
+                    O
+                    
+                      2
+                    
+                    
+                      
+                    
+                  
+                  ⟶
+                
+                 
+              
+              
+                
+                  
+                    
+                      
+                        
+                          
+                            3
+                            
+                            
+                              (
+                              α
+                              
+                                
+                                  −
+                                
+                              
+                              
+                                Fe
+                                
+                                  2
+                                
+                                
+                                  
+                                
+                              
+                              
+                                O
+                                
+                                  3
+                                
+                                
+                                  
+                                
+                              
+                              )
+                            
+                          
+                          ⏟
+                        
+                      
+                      
+                        hematite
+                      
+                    
+                  
+                
+              
+            
+          
+        
+      
+    
+    {\displaystyle {\begin{aligned}\overbrace {{\ce {2Fe3O4}}} ^{\text{magnetite}}+{\ce {1/2 O2 ->}}\ &{\color {Brown}\overbrace {{\ce {3(\lambda{-}Fe2O3)}}} ^{\text{maghemite}}}\\\underbrace {{\ce {2Fe3O4}}} _{\text{magnetite}}+{\ce {1/2 O2 ->}}\ &{\color {BrickRed}\underbrace {{\ce {3(\alpha{-}Fe2O3)}}} _{\text{hematite}}}\end{aligned}}}
+  
+
+To align the equations or color them, use <math chem> and \ce.
+
+
+=== 1 step method ===
+
+  
+    
+      
+        
+          
+            
+              
+              
+                X
+              
+              
+                
+                  
+                    →
+                    f
+                  
+                
+              
+              
+                Z
+              
+              
+            
+            
+              
+              
+                g
+                ↓
+              
+              
+              
+                ↓
+                
+                  g
+                  ′
+                
+              
+            
+            
+              
+              
+                Y
+              
+              
+                
+                  
+                    →
+                    
+                      f
+                      ′
+                    
+                  
+                
+              
+              
+                W
+              
+              
+            
+          
+        
+      
+    
+    {\displaystyle {\begin{array}{lcl}&X&{\overset {f}{\rightarrow }}&Z&\\&g\downarrow &&\downarrow g'\\&Y&{\underset {f'}{\rightarrow }}&W&\\\end{array}}}
+  
+
+
+=== 3 step method ===
+
+To make a commutative diagram, there are three steps:
+
+write the diagram in TeX
+convert to SVG
+upload the file to Wikimedia Commons
+
+
+==== Diagrams in TeX ====
+Xy-pic (online manual) is the most powerful and general-purpose diagram package in TeX. Diagrams created using it can be found at Commons: Category:Xy-pic diagrams.
+Simpler packages include:
+
+AMS's amscd
+Paul Taylor's diagrams
+François Borceux Diagrams
+The following is a template for Xy-pic:
+
+Using postscript drivers may in some cases give smoother curves and will handle fonts differently:
+
+
+==== Convert to SVG ====
+Once you have produced your diagram in LaTeX (or TeX), you can convert it to an SVG file using the following sequence of commands:
+
+The pdfcrop and pdf2svg utilities are needed for this procedure. You can alternatively use pdf2svg from PDFTron for the last step.
+If you do not have pdfTeX (which is unlikely) you can use the following commands to replace the first step (TeX → PDF):
+
+In general, you will not be able to get anywhere with diagrams without TeX and Ghostscript, and the inkscape program is a useful tool for creating or modifying your diagrams by hand. There is also a utility pstoedit which supports direct conversion from Postscript files to many vector graphics formats, but it requires a non-free plugin to convert to SVG, and regardless of the format, this editor has not been successful in using it to convert diagrams with diagonal arrows from TeX-created files.
+These programs are:
+
+a working TeX distribution, such as TeX Live
+Ghostscript
+pstoedit
+Inkscape
+
+
+==== Upload the file ====
+
+As the diagram is your own work, upload it to Wikimedia Commons, so that all projects (notably, all languages) can use it without having to copy it to their language's Wiki. (If you've previously uploaded a file to somewhere other than Commons, to Commons.)
+
+Check size
+Before uploading, check that the default size of the image is neither too large nor too small by opening in an SVG application and viewing at default size (100% scaling), otherwise adjust the -y option to dvips.
+Name
+Make sure the file has a meaningful name.
+Upload
+Login to Wikimedia Commons, then upload the file; for the Summary, give a brief description.
+Now go to the image page and add a description, including the source code, using this template:
+
+Source code
+
+Include the source code in the image page, in the Source section of the {{Information}} template, so that the diagram can be edited in future.
+Include the complete .tex file, not just the fragment, so future editors do not need to reconstruct a compilable file.
+You may optionally make the source code section collapsible, using the {{cot}} or {{cob}} templates.
+(Don't include it in the Summary section, which is just supposed to be a summary.)
+License
+The most common license for commutative diagrams is PD-self; some use PD-ineligible, especially for simple diagrams, or other licenses. Please do not use the GFDL, as it requires the entire text of the GFDL to be attached to any document that uses the diagram.
+Description
+If possible, link to a Wikipedia page relevant to the diagram. (The 1= is necessary if you use nest templates within the description, and harmless otherwise.)
+Category
+Include [[Category:Commutative diagrams]], so that it appears in commons:Category:Commutative diagrams. There are also subcategories, which you may choose to use.
+Include image
+Now include the image on the original page via [[File:Diagram.svg]]. Use [[File:Diagram.svg|class=skin-invert]] to invert colors in dark mode.
+
+
+==== Examples ====
+A sample conforming diagram is commons:File:PSU-PU.svg.
+
+While links from formulas using LaTeX macros such as \href or \url or are currently not supported, one can link individual math expressions to Wikidata items to explain the meaning of individual terms of mathematical expressions. For example,
+
+links to a special page that displays additional information on that formula.
+To change the information shown on the special page, navigate to the Wikidata item linked at the bottom of the special page. Use the has part property to link parts of the equation to other Wikidata items with their respective Wikipedia articles. This is not limited to individual identifiers, but can also be used to link more complex terms.  
+A condensed version of that special page might be shown in the future as a popup: phab:T239357.
+
+
+=== Quadratic polynomial ===
+
+
+=== Quadratic formula ===
+
+
+=== Tall parentheses and fractions ===
+
+
+=== Integrals ===
+
+
+=== Matrices and determinants ===
+
+
+=== Summation ===
+
+
+=== Differential equation ===
+
+
+=== Complex numbers ===
+
+
+=== Limits ===
+
+
+=== Integral equation ===
+
+
+=== Example ===
+
+
+=== Continuation and cases ===
+
+
+=== Prefixed subscript ===
+
+
+=== Fraction and small fraction ===
+
+
+=== Area of a quadrilateral ===
+
+
+=== Volume of a sphere-stand ===
+
+
+=== Multiple equations ===
+The altered newline code \\[0.6ex] below adds a vertical space between the two lines of length equal to 
+  
+    
+      
+        0.6
+      
+    
+    {\displaystyle 0.6}
+  
+ times the height of a single 'x' character.
+
+{{Math}}
+MathJax—Javascript library that converts LaTeX to MathML
+Typesetting of mathematical formulas
+Help:Score (a tag for tablatures, ""sheet music"") and Help:Musical symbols
+List of mathematical symbols
+WP:Rendering math
+blahtex: a LaTeX to MathML converter for Wikipedia
+commons:Category:Images which should use TeX
+Handwriting recognition, another way to put formulas, in a visual manner.
+
+
+=== Footnotes ===
+
+
+=== Citations ===
+
+Task:Creating a visual VisualEditor plugin tool to add/edit maths blocks in Wikimedia Phabricator
+A LaTeX tutorial
+LaTex online editor
+Doob, Michael, A Gentle Introduction to TeX: A Manual for Self-study (PDF). A paper introducing TeX — see page 39 onwards for a good introduction to the maths side of things.
+Oetiker, Tobias; Partl, Hubert; Hyna, Irene; Schlegl, Elisabeth (December 13, 2009), The Not So Short Introduction to LaTeX 2ε (PDF) (4.27 ed.). A paper introducing LaTeX — skip to page 49 for the math section. See page 63 for a complete reference list of symbols included in LaTeX and AMS-LaTeX.
+The Comprehensive LaTeX Symbol List—symbols not found here may be documented there.
+The esint package for closed double integrals
+AMS-LaTeX guide.
+""Handwriting Recognition"". Mathpix. Optical character recognition of handwritten mathematical formulas into LaTeX and other formats, offering 10 free snips a month (registration required).
+cancel package homepage and PDF documentation
+A set of public domain fixed-size math symbol bitmaps.
+List of mathematical symbols with their Unicode characters and their LaTeX commands
+MathML: A product of the W3C Math working group, is a low-level specification for describing mathematics as a basis for machine-to-machine communication
+HTML Math and the <MATH> tag, W3C."

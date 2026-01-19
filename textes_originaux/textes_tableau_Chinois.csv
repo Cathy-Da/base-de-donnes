@@ -1,0 +1,246 @@
+id_texte,titre,texte_contenu
+4,Help:数学公式,"这里所使用的LaTeX版本是AMS-LaTeX标记的一个子集，LaTeX标记的一个超集，用于数学公式。只有TeX语言的有限的一部分得到支持。
+默认情况下会生成含不可见MathML的SVG图像。更老的PNG图像可通过用户设置来设置。在像Firefox这样的浏览器上面可以通过安装扩展来使用MathML；详情請参阅mw:Extension:Math的扩展主页。MathJax的客户端不再被支持。
+数学记号应该放在<math>与</math>的標记之间。更详细的内容，或者关于TeX显示的讨论或者您有任何建议，请到英文维基百科的相关页面。
+
+关于这些符号的更多语义，参阅TeX Cookbook的简述。
+
+
+==== 混合字体 ====
+
+您可以使用 \left 和 \right 来显示不同的括号： 
+
+备注：
+
+可以使用 \big, \Big, \bigg, \Bigg 控制括号的大小，比如代码
+\Bigg ( \bigg [ \Big \{ \big \langle \left | \| \frac{a}{b} \| \right | \big \rangle \Big \} \bigg ] \Bigg )
+　显示︰
+
+  
+    
+      
+        
+          
+            (
+          
+        
+        
+          
+            [
+          
+        
+        
+          
+            {
+          
+        
+        
+          
+            ⟨
+          
+        
+        
+          |
+          
+            ‖
+            
+              
+                a
+                b
+              
+            
+            ‖
+          
+          |
+        
+        
+          
+            ⟩
+          
+        
+        
+          
+            }
+          
+        
+        
+          
+            ]
+          
+        
+        
+          
+            )
+          
+        
+      
+    
+    {\displaystyle {\Bigg (}{\bigg [}{\Big \{}{\big \langle }\left|\|{\frac {a}{b}}\|\right|{\big \rangle }{\Big \}}{\bigg ]}{\Bigg )}}
+  
+
+注意TeX能够自动处理大多数的空格，但是您有时候需要自己来控制。
+
+語法
+字體顏色︰{\color{色調}表達式}
+背景顏色︰{\pagecolor{色調}表達式}
+支援色調表
+
+＊註︰輸入時第一個字母必需以大寫輸入，如\color{OliveGreen}。
+
+例子
+
+{\color{Blue}x^2}+{\color{Brown}2x} - {\color{OliveGreen}1}
+
+  
+    
+      
+        
+          
+            
+              x
+              
+                2
+              
+            
+          
+        
+        +
+        
+          
+            2
+            x
+          
+        
+        −
+        
+          
+            1
+          
+        
+      
+    
+    {\displaystyle {\color {Blue}x^{2}}+{\color {Brown}2x}-{\color {OliveGreen}1}}
+  
+
+x_{\color{Maroon}1,2}=\frac{-b\pm\sqrt{{\color{Maroon}b^2-4ac}}}{2a}
+
+  
+    
+      
+        
+          x
+          
+            
+              1
+              ,
+              2
+            
+          
+        
+        =
+        
+          
+            
+              −
+              b
+              ±
+              
+                
+                  
+                    
+                      b
+                      
+                        2
+                      
+                    
+                    −
+                    4
+                    a
+                    c
+                  
+                
+              
+            
+            
+              2
+              a
+            
+          
+        
+      
+    
+    {\displaystyle x_{\color {Maroon}1,2}={\frac {-b\pm {\sqrt {\color {Maroon}b^{2}-4ac}}}{2a}}}
+  
+
+此功能並不常用。
+
+10 的 
+  
+    
+      
+        f
+        (
+        x
+        )
+        =
+        5
+        +
+        
+          
+            1
+            5
+          
+        
+      
+    
+    {\displaystyle f(x)=5+{\frac {1}{5}}}
+  
+ 是 2。
+N並不好看。
+10 的 
+  
+    
+      
+        
+          
+            
+              
+                
+                  f
+                  (
+                  x
+                  )
+                  =
+                  5
+                  +
+                  
+                    
+                      1
+                      5
+                    
+                  
+                
+              
+            
+          
+        
+      
+    
+    {\displaystyle {\begin{smallmatrix}f(x)=5+{\frac {1}{5}}\end{smallmatrix}}}
+  
+ 是 2。
+Y好看些了。
+可以使用
+
+   \begin{smallmatrix}...\end{smallmatrix}
+
+或直接使用{{Smallmath}}模板。
+
+   {{Smallmath|f=  f(x)=5+\frac{1}{5} }}
+
+一個介紹TeX的PDF文檔（英文）： http://www.ctan.org/tex-archive/info/gentle/gentle.pdf
+手畫符號搜尋LaTeX代碼: Detexify
+LaTeX在线编辑器
+LaTeX在线编辑器：latexlive
+LaTeX for Logicians
+AMS-LaTeX指南"

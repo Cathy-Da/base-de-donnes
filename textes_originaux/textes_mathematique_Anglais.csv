@@ -1,0 +1,1629 @@
+id_texte,titre,texte_contenu
+2,Abel's summation formula,"In mathematics, Abel's summation formula, introduced by Niels Henrik Abel, is intensively used in analytic number theory and the study of special functions to compute series.
+
+
+== Formula ==
+
+Let 
+  
+    
+      
+        (
+        
+          a
+          
+            n
+          
+        
+        
+          )
+          
+            n
+            =
+            0
+          
+          
+            ∞
+          
+        
+      
+    
+    {\displaystyle (a_{n})_{n=0}^{\infty }}
+  
+ be a sequence of real or complex numbers.  Define the partial sum function 
+  
+    
+      
+        A
+      
+    
+    {\displaystyle A}
+  
+ by
+
+  
+    
+      
+        A
+        (
+        t
+        )
+        =
+        
+          ∑
+          
+            0
+            ≤
+            n
+            ≤
+            t
+          
+        
+        
+          a
+          
+            n
+          
+        
+      
+    
+    {\displaystyle A(t)=\sum _{0\leq n\leq t}a_{n}}
+  
+
+for any real number 
+  
+    
+      
+        t
+      
+    
+    {\displaystyle t}
+  
+.  Fix real numbers 
+  
+    
+      
+        x
+        <
+        y
+      
+    
+    {\displaystyle x<y}
+  
+, and let 
+  
+    
+      
+        ϕ
+      
+    
+    {\displaystyle \phi }
+  
+ be a continuously differentiable function on 
+  
+    
+      
+        [
+        x
+        ,
+        y
+        ]
+      
+    
+    {\displaystyle [x,y]}
+  
+.  Then:
+
+  
+    
+      
+        
+          ∑
+          
+            x
+            <
+            n
+            ≤
+            y
+          
+        
+        
+          a
+          
+            n
+          
+        
+        ϕ
+        (
+        n
+        )
+        =
+        A
+        (
+        y
+        )
+        ϕ
+        (
+        y
+        )
+        −
+        A
+        (
+        x
+        )
+        ϕ
+        (
+        x
+        )
+        −
+        
+          ∫
+          
+            x
+          
+          
+            y
+          
+        
+        A
+        (
+        u
+        )
+        
+          ϕ
+          ′
+        
+        (
+        u
+        )
+        
+        d
+        u
+        .
+      
+    
+    {\displaystyle \sum _{x<n\leq y}a_{n}\phi (n)=A(y)\phi (y)-A(x)\phi (x)-\int _{x}^{y}A(u)\phi '(u)\,du.}
+  
+
+The formula is derived by applying integration by parts for a Riemann–Stieltjes integral to the functions 
+  
+    
+      
+        A
+      
+    
+    {\displaystyle A}
+  
+ and 
+  
+    
+      
+        ϕ
+      
+    
+    {\displaystyle \phi }
+  
+.
+
+
+=== Variations ===
+Taking the left endpoint to be 
+  
+    
+      
+        −
+        1
+      
+    
+    {\displaystyle -1}
+  
+ gives the formula
+
+  
+    
+      
+        
+          ∑
+          
+            0
+            ≤
+            n
+            ≤
+            x
+          
+        
+        
+          a
+          
+            n
+          
+        
+        ϕ
+        (
+        n
+        )
+        =
+        A
+        (
+        x
+        )
+        ϕ
+        (
+        x
+        )
+        −
+        
+          ∫
+          
+            0
+          
+          
+            x
+          
+        
+        A
+        (
+        u
+        )
+        
+          ϕ
+          ′
+        
+        (
+        u
+        )
+        
+        d
+        u
+        .
+      
+    
+    {\displaystyle \sum _{0\leq n\leq x}a_{n}\phi (n)=A(x)\phi (x)-\int _{0}^{x}A(u)\phi '(u)\,du.}
+  
+
+If the sequence 
+  
+    
+      
+        (
+        
+          a
+          
+            n
+          
+        
+        )
+      
+    
+    {\displaystyle (a_{n})}
+  
+ is indexed starting at 
+  
+    
+      
+        n
+        =
+        1
+      
+    
+    {\displaystyle n=1}
+  
+, then we may formally define 
+  
+    
+      
+        
+          a
+          
+            0
+          
+        
+        =
+        0
+      
+    
+    {\displaystyle a_{0}=0}
+  
+.  The previous formula becomes
+
+  
+    
+      
+        
+          ∑
+          
+            1
+            ≤
+            n
+            ≤
+            x
+          
+        
+        
+          a
+          
+            n
+          
+        
+        ϕ
+        (
+        n
+        )
+        =
+        A
+        (
+        x
+        )
+        ϕ
+        (
+        x
+        )
+        −
+        
+          ∫
+          
+            1
+          
+          
+            x
+          
+        
+        A
+        (
+        u
+        )
+        
+          ϕ
+          ′
+        
+        (
+        u
+        )
+        
+        d
+        u
+        .
+      
+    
+    {\displaystyle \sum _{1\leq n\leq x}a_{n}\phi (n)=A(x)\phi (x)-\int _{1}^{x}A(u)\phi '(u)\,du.}
+  
+
+A common way to apply Abel's summation formula is to take the limit of one of these formulas as 
+  
+    
+      
+        x
+        →
+        ∞
+      
+    
+    {\displaystyle x\to \infty }
+  
+.  The resulting formulas are
+
+  
+    
+      
+        
+          
+            
+              
+                
+                  ∑
+                  
+                    n
+                    =
+                    0
+                  
+                  
+                    ∞
+                  
+                
+                
+                  a
+                  
+                    n
+                  
+                
+                ϕ
+                (
+                n
+                )
+              
+              
+                
+                =
+                
+                  lim
+                  
+                    x
+                    →
+                    ∞
+                  
+                
+                
+                  
+                    (
+                  
+                
+                A
+                (
+                x
+                )
+                ϕ
+                (
+                x
+                )
+                
+                  
+                    )
+                  
+                
+                −
+                
+                  ∫
+                  
+                    0
+                  
+                  
+                    ∞
+                  
+                
+                A
+                (
+                u
+                )
+                
+                  ϕ
+                  ′
+                
+                (
+                u
+                )
+                
+                d
+                u
+                ,
+              
+            
+            
+              
+                
+                  ∑
+                  
+                    n
+                    =
+                    1
+                  
+                  
+                    ∞
+                  
+                
+                
+                  a
+                  
+                    n
+                  
+                
+                ϕ
+                (
+                n
+                )
+              
+              
+                
+                =
+                
+                  lim
+                  
+                    x
+                    →
+                    ∞
+                  
+                
+                
+                  
+                    (
+                  
+                
+                A
+                (
+                x
+                )
+                ϕ
+                (
+                x
+                )
+                
+                  
+                    )
+                  
+                
+                −
+                
+                  ∫
+                  
+                    1
+                  
+                  
+                    ∞
+                  
+                
+                A
+                (
+                u
+                )
+                
+                  ϕ
+                  ′
+                
+                (
+                u
+                )
+                
+                d
+                u
+                .
+              
+            
+          
+        
+      
+    
+    {\displaystyle {\begin{aligned}\sum _{n=0}^{\infty }a_{n}\phi (n)&=\lim _{x\to \infty }{\bigl (}A(x)\phi (x){\bigr )}-\int _{0}^{\infty }A(u)\phi '(u)\,du,\\\sum _{n=1}^{\infty }a_{n}\phi (n)&=\lim _{x\to \infty }{\bigl (}A(x)\phi (x){\bigr )}-\int _{1}^{\infty }A(u)\phi '(u)\,du.\end{aligned}}}
+  
+
+These equations hold whenever both limits on the right-hand side exist and are finite.
+A particularly useful case is the sequence 
+  
+    
+      
+        
+          a
+          
+            n
+          
+        
+        =
+        1
+      
+    
+    {\displaystyle a_{n}=1}
+  
+ for all 
+  
+    
+      
+        n
+        ≥
+        0
+      
+    
+    {\displaystyle n\geq 0}
+  
+.  In this case, 
+  
+    
+      
+        A
+        (
+        x
+        )
+        =
+        ⌊
+        x
+        +
+        1
+        ⌋
+      
+    
+    {\displaystyle A(x)=\lfloor x+1\rfloor }
+  
+.  For this sequence, Abel's summation formula simplifies to
+
+  
+    
+      
+        
+          ∑
+          
+            0
+            ≤
+            n
+            ≤
+            x
+          
+        
+        ϕ
+        (
+        n
+        )
+        =
+        ⌊
+        x
+        +
+        1
+        ⌋
+        ϕ
+        (
+        x
+        )
+        −
+        
+          ∫
+          
+            0
+          
+          
+            x
+          
+        
+        ⌊
+        u
+        +
+        1
+        ⌋
+        
+          ϕ
+          ′
+        
+        (
+        u
+        )
+        
+        d
+        u
+        .
+      
+    
+    {\displaystyle \sum _{0\leq n\leq x}\phi (n)=\lfloor x+1\rfloor \phi (x)-\int _{0}^{x}\lfloor u+1\rfloor \phi '(u)\,du.}
+  
+
+Similarly, for the sequence 
+  
+    
+      
+        
+          a
+          
+            0
+          
+        
+        =
+        0
+      
+    
+    {\displaystyle a_{0}=0}
+  
+ and 
+  
+    
+      
+        
+          a
+          
+            n
+          
+        
+        =
+        1
+      
+    
+    {\displaystyle a_{n}=1}
+  
+ for all 
+  
+    
+      
+        n
+        ≥
+        1
+      
+    
+    {\displaystyle n\geq 1}
+  
+, the formula becomes
+
+  
+    
+      
+        
+          ∑
+          
+            1
+            ≤
+            n
+            ≤
+            x
+          
+        
+        ϕ
+        (
+        n
+        )
+        =
+        ⌊
+        x
+        ⌋
+        ϕ
+        (
+        x
+        )
+        −
+        
+          ∫
+          
+            1
+          
+          
+            x
+          
+        
+        ⌊
+        u
+        ⌋
+        
+          ϕ
+          ′
+        
+        (
+        u
+        )
+        
+        d
+        u
+        .
+      
+    
+    {\displaystyle \sum _{1\leq n\leq x}\phi (n)=\lfloor x\rfloor \phi (x)-\int _{1}^{x}\lfloor u\rfloor \phi '(u)\,du.}
+  
+
+Upon taking the limit as 
+  
+    
+      
+        x
+        →
+        ∞
+      
+    
+    {\displaystyle x\to \infty }
+  
+, we find
+
+  
+    
+      
+        
+          
+            
+              
+                
+                  ∑
+                  
+                    n
+                    =
+                    0
+                  
+                  
+                    ∞
+                  
+                
+                ϕ
+                (
+                n
+                )
+              
+              
+                
+                =
+                
+                  lim
+                  
+                    x
+                    →
+                    ∞
+                  
+                
+                
+                  
+                    (
+                  
+                
+                ⌊
+                x
+                +
+                1
+                ⌋
+                ϕ
+                (
+                x
+                )
+                
+                  
+                    )
+                  
+                
+                −
+                
+                  ∫
+                  
+                    0
+                  
+                  
+                    ∞
+                  
+                
+                ⌊
+                u
+                +
+                1
+                ⌋
+                
+                  ϕ
+                  ′
+                
+                (
+                u
+                )
+                
+                d
+                u
+                ,
+              
+            
+            
+              
+                
+                  ∑
+                  
+                    n
+                    =
+                    1
+                  
+                  
+                    ∞
+                  
+                
+                ϕ
+                (
+                n
+                )
+              
+              
+                
+                =
+                
+                  lim
+                  
+                    x
+                    →
+                    ∞
+                  
+                
+                
+                  
+                    (
+                  
+                
+                ⌊
+                x
+                ⌋
+                ϕ
+                (
+                x
+                )
+                
+                  
+                    )
+                  
+                
+                −
+                
+                  ∫
+                  
+                    1
+                  
+                  
+                    ∞
+                  
+                
+                ⌊
+                u
+                ⌋
+                
+                  ϕ
+                  ′
+                
+                (
+                u
+                )
+                
+                d
+                u
+                ,
+              
+            
+          
+        
+      
+    
+    {\displaystyle {\begin{aligned}\sum _{n=0}^{\infty }\phi (n)&=\lim _{x\to \infty }{\bigl (}\lfloor x+1\rfloor \phi (x){\bigr )}-\int _{0}^{\infty }\lfloor u+1\rfloor \phi '(u)\,du,\\\sum _{n=1}^{\infty }\phi (n)&=\lim _{x\to \infty }{\bigl (}\lfloor x\rfloor \phi (x){\bigr )}-\int _{1}^{\infty }\lfloor u\rfloor \phi '(u)\,du,\end{aligned}}}
+  
+
+assuming that both terms on the right-hand side exist and are finite.
+Abel's summation formula can be generalized to the case where 
+  
+    
+      
+        ϕ
+      
+    
+    {\displaystyle \phi }
+  
+ is only assumed to be continuous if the integral is interpreted as a Riemann–Stieltjes integral:
+
+  
+    
+      
+        
+          ∑
+          
+            x
+            <
+            n
+            ≤
+            y
+          
+        
+        
+          a
+          
+            n
+          
+        
+        ϕ
+        (
+        n
+        )
+        =
+        A
+        (
+        y
+        )
+        ϕ
+        (
+        y
+        )
+        −
+        A
+        (
+        x
+        )
+        ϕ
+        (
+        x
+        )
+        −
+        
+          ∫
+          
+            x
+          
+          
+            y
+          
+        
+        A
+        (
+        u
+        )
+        
+        d
+        ϕ
+        (
+        u
+        )
+        .
+      
+    
+    {\displaystyle \sum _{x<n\leq y}a_{n}\phi (n)=A(y)\phi (y)-A(x)\phi (x)-\int _{x}^{y}A(u)\,d\phi (u).}
+  
+
+By taking 
+  
+    
+      
+        ϕ
+      
+    
+    {\displaystyle \phi }
+  
+ to be the partial sum function associated to some sequence, this leads to the summation by parts formula.
+
+
+== Examples ==
+
+
+=== Harmonic numbers ===
+If 
+  
+    
+      
+        
+          a
+          
+            n
+          
+        
+        =
+        1
+      
+    
+    {\displaystyle a_{n}=1}
+  
+ for 
+  
+    
+      
+        n
+        ≥
+        1
+      
+    
+    {\displaystyle n\geq 1}
+  
+ and 
+  
+    
+      
+        ϕ
+        (
+        x
+        )
+        =
+        1
+        
+          /
+        
+        x
+        ,
+      
+    
+    {\displaystyle \phi (x)=1/x,}
+  
+ then 
+  
+    
+      
+        A
+        (
+        x
+        )
+        =
+        ⌊
+        x
+        ⌋
+      
+    
+    {\displaystyle A(x)=\lfloor x\rfloor }
+  
+ and the formula yields
+
+  
+    
+      
+        
+          ∑
+          
+            n
+            =
+            1
+          
+          
+            ⌊
+            x
+            ⌋
+          
+        
+        
+          
+            1
+            n
+          
+        
+        =
+        
+          
+            
+              ⌊
+              x
+              ⌋
+            
+            x
+          
+        
+        +
+        
+          ∫
+          
+            1
+          
+          
+            x
+          
+        
+        
+          
+            
+              ⌊
+              u
+              ⌋
+            
+            
+              u
+              
+                2
+              
+            
+          
+        
+        
+        d
+        u
+        .
+      
+    
+    {\displaystyle \sum _{n=1}^{\lfloor x\rfloor }{\frac {1}{n}}={\frac {\lfloor x\rfloor }{x}}+\int _{1}^{x}{\frac {\lfloor u\rfloor }{u^{2}}}\,du.}
+  
+
+The left-hand side is the harmonic number 
+  
+    
+      
+        
+          H
+          
+            ⌊
+            x
+            ⌋
+          
+        
+      
+    
+    {\displaystyle H_{\lfloor x\rfloor }}
+  
+.
+
+
+=== Representation of Riemann's zeta function ===
+Fix a complex number 
+  
+    
+      
+        s
+      
+    
+    {\displaystyle s}
+  
+.  If 
+  
+    
+      
+        
+          a
+          
+            n
+          
+        
+        =
+        1
+      
+    
+    {\displaystyle a_{n}=1}
+  
+ for 
+  
+    
+      
+        n
+        ≥
+        1
+      
+    
+    {\displaystyle n\geq 1}
+  
+ and 
+  
+    
+      
+        ϕ
+        (
+        x
+        )
+        =
+        
+          x
+          
+            −
+            s
+          
+        
+        ,
+      
+    
+    {\displaystyle \phi (x)=x^{-s},}
+  
+ then 
+  
+    
+      
+        A
+        (
+        x
+        )
+        =
+        ⌊
+        x
+        ⌋
+      
+    
+    {\displaystyle A(x)=\lfloor x\rfloor }
+  
+ and the formula becomes
+
+  
+    
+      
+        
+          ∑
+          
+            n
+            =
+            1
+          
+          
+            ⌊
+            x
+            ⌋
+          
+        
+        
+          
+            1
+            
+              n
+              
+                s
+              
+            
+          
+        
+        =
+        
+          
+            
+              ⌊
+              x
+              ⌋
+            
+            
+              x
+              
+                s
+              
+            
+          
+        
+        +
+        s
+        
+          ∫
+          
+            1
+          
+          
+            x
+          
+        
+        
+          
+            
+              ⌊
+              u
+              ⌋
+            
+            
+              u
+              
+                1
+                +
+                s
+              
+            
+          
+        
+        
+        d
+        u
+        .
+      
+    
+    {\displaystyle \sum _{n=1}^{\lfloor x\rfloor }{\frac {1}{n^{s}}}={\frac {\lfloor x\rfloor }{x^{s}}}+s\int _{1}^{x}{\frac {\lfloor u\rfloor }{u^{1+s}}}\,du.}
+  
+
+If 
+  
+    
+      
+        ℜ
+        (
+        s
+        )
+        >
+        1
+      
+    
+    {\displaystyle \Re (s)>1}
+  
+, then the limit as 
+  
+    
+      
+        x
+        →
+        ∞
+      
+    
+    {\displaystyle x\to \infty }
+  
+ exists and yields the formula
+
+  
+    
+      
+        ζ
+        (
+        s
+        )
+        =
+        s
+        
+          ∫
+          
+            1
+          
+          
+            ∞
+          
+        
+        
+          
+            
+              ⌊
+              u
+              ⌋
+            
+            
+              u
+              
+                1
+                +
+                s
+              
+            
+          
+        
+        
+        d
+        u
+        .
+      
+    
+    {\displaystyle \zeta (s)=s\int _{1}^{\infty }{\frac {\lfloor u\rfloor }{u^{1+s}}}\,du.}
+  
+
+where 
+  
+    
+      
+        ζ
+        (
+        s
+        )
+      
+    
+    {\displaystyle \zeta (s)}
+  
+ is the Riemann zeta function.
+This may be used to derive Dirichlet's theorem that 
+  
+    
+      
+        ζ
+        (
+        s
+        )
+      
+    
+    {\displaystyle \zeta (s)}
+  
+ has a simple pole with residue 1 at s = 1.
+
+
+=== Reciprocal of Riemann zeta function ===
+The technique of the previous example may also be applied to other Dirichlet series.  If 
+  
+    
+      
+        
+          a
+          
+            n
+          
+        
+        =
+        μ
+        (
+        n
+        )
+      
+    
+    {\displaystyle a_{n}=\mu (n)}
+  
+ is the Möbius function and 
+  
+    
+      
+        ϕ
+        (
+        x
+        )
+        =
+        
+          x
+          
+            −
+            s
+          
+        
+      
+    
+    {\displaystyle \phi (x)=x^{-s}}
+  
+, then 
+  
+    
+      
+        A
+        (
+        x
+        )
+        =
+        M
+        (
+        x
+        )
+        =
+        
+          ∑
+          
+            n
+            ≤
+            x
+          
+        
+        μ
+        (
+        n
+        )
+      
+    
+    {\displaystyle A(x)=M(x)=\sum _{n\leq x}\mu (n)}
+  
+ is Mertens function and
+
+  
+    
+      
+        
+          
+            1
+            
+              ζ
+              (
+              s
+              )
+            
+          
+        
+        =
+        
+          ∑
+          
+            n
+            =
+            1
+          
+          
+            ∞
+          
+        
+        
+          
+            
+              μ
+              (
+              n
+              )
+            
+            
+              n
+              
+                s
+              
+            
+          
+        
+        =
+        s
+        
+          ∫
+          
+            1
+          
+          
+            ∞
+          
+        
+        
+          
+            
+              M
+              (
+              u
+              )
+            
+            
+              u
+              
+                1
+                +
+                s
+              
+            
+          
+        
+        
+        d
+        u
+        .
+      
+    
+    {\displaystyle {\frac {1}{\zeta (s)}}=\sum _{n=1}^{\infty }{\frac {\mu (n)}{n^{s}}}=s\int _{1}^{\infty }{\frac {M(u)}{u^{1+s}}}\,du.}
+  
+
+This formula holds for 
+  
+    
+      
+        ℜ
+        (
+        s
+        )
+        >
+        1
+      
+    
+    {\displaystyle \Re (s)>1}
+  
+.
+
+
+== See also ==
+Summation by parts
+Integration by parts
+
+
+== References ==
+Apostol, Tom (1976), Introduction to Analytic Number Theory, Undergraduate Texts in Mathematics, Springer-Verlag."

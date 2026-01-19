@@ -1,0 +1,695 @@
+id_texte,titre,texte_contenu
+1,Aide:Formules_TeX,"La syntaxe suivante est à utiliser avec l'éditeur visuel ou le wikicode (avec le wikicode la formule TeX doit être insérée entre deux balises <math> et </math>).
+
+
+=== Caractères ===
+TeX n'accepte que les caractères latins non accentués, sauf dans le champ de la commande \text (2e ligne du tableau « Catalogue »). Ailleurs les caractères grecs ont chacun leur code (par exemple \alpha pour 
+  
+    
+      
+        α
+      
+    
+    {\displaystyle \alpha }
+  
+, voir la section « Jeux de caractères »), et les caractères accentués sont représentés par le code de l'accent précédant le caractère non accentué (par exemple \acute e pour 
+  
+    
+      
+        
+          
+            
+              e
+              ´
+            
+          
+        
+      
+    
+    {\displaystyle {\acute {e}}}
+  
+, voir la 1re ligne du tableau « Catalogue »).
+
+
+=== Commandes et environnements ===
+Les commandes commencent par une contre-oblique \, suivie :
+
+soit d'un nom composé uniquement de lettres non diacritées. Une espace, un chiffre ou tout autre caractère closent le nom, par exemple : x\mapsto2 donne 
+  
+    
+      
+        x
+        ↦
+        2
+      
+    
+    {\displaystyle x\mapsto 2}
+  
+ ;
+soit d’un seul caractère spécial (non-lettre), ex. : \# donne 
+  
+    
+      
+        #
+      
+    
+    {\displaystyle \#}
+  
+.
+Les caractères + - = / ' | * < > ( ), les chiffres arabes et les lettres de l'alphabet non diacritées peuvent être tapés directement. Les autres symboles doivent être créés avec les commandes appropriées : les caractères réservés # $ % ^ & _ { } ~ \ sont obtenus respectivement par \# \$ \% \^ \& \_ \{ \} \~ \backslash.
+Une commande peut accepter un ou plusieurs arguments. Les arguments obligatoires doivent former un bloc au sens de LaTeX : s'ils ne font qu'un caractère de long, ils peuvent être écrits tels quels : \sqrt x donne 
+  
+    
+      
+        
+          
+            x
+          
+        
+      
+    
+    {\displaystyle {\sqrt {x}}}
+  
+ ; sinon, ils doivent être délimités par des accolades : \sqrt{xyz} donne 
+  
+    
+      
+        
+          
+            x
+            y
+            z
+          
+        
+      
+    
+    {\displaystyle {\sqrt {xyz}}}
+  
+. Les commandes elles-mêmes sont aussi considérées comme des blocs : \sqrt\frac12 donne 
+  
+    
+      
+        
+          
+            
+              1
+              2
+            
+          
+        
+      
+    
+    {\displaystyle {\sqrt {\frac {1}{2}}}}
+  
+ et pas 
+  
+    
+      
+        
+          
+            ∖
+          
+        
+        f
+        r
+        a
+        c
+        12
+      
+    
+    {\displaystyle {\sqrt {\backslash }}frac12}
+  
+. Il est néanmoins conseillé d'utiliser les accolades même quand elles ne sont pas indispensables : \sqrt{\frac{1}{2}}.
+Des premières règles ci-avant, on déduit qu'on peut omettre l'espace entre la commande et son premier argument, si celui-ci n'est pas un caractère accepté dans un nom de commande : \sqrt2 est équivalent à \sqrt 2 ou \sqrt{2}, mais \sqrtx n'est pas valide et doit être écrit \sqrt{x} ou \sqrt x. À l'inverse, on peut écrire autant d'espaces et de sauts à la ligne que l'on désire.
+Les arguments facultatifs sont entre crochets, avant les arguments obligatoires : \sqrt[n]{x} donne 
+  
+    
+      
+        
+          
+            x
+            
+              n
+            
+          
+        
+      
+    
+    {\displaystyle {\sqrt[{n}]{x}}}
+  
+.
+Les environnements sont des régions dans lesquelles sont appliquées certaines règles particulières ; ils forment un contexte spécifique. Ils commencent par \begin{nom de l'environnement} et se terminent par \end{nom de l'environnement}. Par exemple, \begin{bmatrix}a & b \\ c & d\end{bmatrix} donne :
+
+  
+    
+      
+        
+          
+            [
+            
+              
+                
+                  a
+                
+                
+                  b
+                
+              
+              
+                
+                  c
+                
+                
+                  d
+                
+              
+            
+            ]
+          
+        
+      
+    
+    {\displaystyle {\begin{bmatrix}a&b\\c&d\end{bmatrix}}}
+  
+
+On distingue les commandes « locales » ou « ponctuelles » des commandes « globales », appelées commutateurs. Les premières ne s'appliquent qu'à leur argument : \mathrm ABC donne 
+  
+    
+      
+        
+          A
+        
+        B
+        C
+         
+      
+    
+    {\displaystyle \mathrm {A} BC~}
+  
+ ; les secondes s'appliquent à tout le texte jusqu'à la fin du groupe : \rm ABC donne 
+  
+    
+      
+        
+          
+            A
+            B
+            C
+             
+          
+        
+      
+    
+    {\displaystyle {\rm {ABC~}}}
+  
+. Un groupe peut être un environnement entier, l'argument d'une commande ou être créé — délimité — à l'aide d'accolades : {\rm A}BC donne 
+  
+    
+      
+        
+          
+            A
+          
+        
+        B
+        C
+         
+      
+    
+    {\displaystyle {\rm {A}}BC~}
+  
+. Généralement, les commutateurs sont des versions obsolètes mais plus courtes des commandes locales.
+
+
+=== Taille ===
+Pour modifier la taille des formules, on peut utiliser les commutateurs \displaystyle, \textstyle, \scriptstyle et \scriptscriptstyle :
+
+La taille displaystyle est la taille par défaut, l'équation dépasse toujours de la hauteur de ligne.
+\frac{1}{2} ou \displaystyle\frac{1}{2} donne 
+  
+    
+      
+        
+          
+            1
+            2
+          
+        
+      
+    
+    {\displaystyle {\frac {1}{2}}}
+  
+
+textstyle est la taille d'une équation composée d'une seule ligne et sans grand symbole, elle est équivalente à displaystyle dans ce cas-là, sinon elle est plus petite. Elle dépasse néanmoins toujours la hauteur de ligne.
+\textstyle\frac{1}{2} donne 
+  
+    
+      
+        
+          
+            
+              1
+              2
+            
+          
+        
+      
+    
+    {\displaystyle \textstyle {\frac {1}{2}}}
+  
+ mais \textstyle a est équivalent à a et donne 
+  
+    
+      
+        
+          a
+        
+      
+    
+    {\displaystyle \textstyle a}
+  
+.
+scriptstyle est la taille des exposants et indices. Si elle est composée d'une seule ligne, elle est contenue dans la hauteur de ligne, sinon elle la dépasse très légèrement.
+\scriptstyle\frac{1}{2} donne 
+  
+    
+      
+        
+          
+            
+              1
+              2
+            
+          
+        
+      
+    
+    {\displaystyle \scriptstyle {\frac {1}{2}}}
+  
+.
+scriptscriptstyle est la plus petite. C'est la seule qui permette de faire entrer une équation de plusieurs lignes à l'intérieur d'une hauteur de ligne.
+\scriptscriptstyle\frac{1}{2} donne 
+  
+    
+      
+        
+          
+            
+              1
+              2
+            
+          
+        
+      
+    
+    {\displaystyle \scriptscriptstyle {\frac {1}{2}}}
+  
+.
+
+
+=== Ponctuation ===
+Selon le Lexique des règles typographiques en usage à l'Imprimerie nationale éd. 2002, p. 110, la ponctuation s'applique aux formules mathématiques, y compris celles qui sont centrées. Elles doivent donc notamment comporter un point si c'est la fin d'une phrase.
+
+
+==== Points de suspension ====
+Pour obtenir des espacements corrects, les points de suspension doivent être réalisés avec les commandes \ldots et \cdots (cette dernière pour les centrer verticalement, notamment entre des opérateurs).
+Illustration :
+
+incorrect : 
+  
+    
+      
+        
+          x
+          
+            1
+          
+        
+        ,
+        .
+        .
+        .
+        ,
+        
+          x
+          
+            n
+          
+        
+      
+    
+    {\displaystyle x_{1},...,x_{n}}
+  
+ et 
+  
+    
+      
+        
+          x
+          
+            1
+          
+        
+        +
+        .
+        .
+        .
+        +
+        
+          x
+          
+            n
+          
+        
+      
+    
+    {\displaystyle x_{1}+...+x_{n}}
+  
+ (utilisation de ...)
+correct : 
+  
+    
+      
+        
+          x
+          
+            1
+          
+        
+        ,
+        …
+        ,
+        
+          x
+          
+            n
+          
+        
+      
+    
+    {\displaystyle x_{1},\ldots ,x_{n}}
+  
+ et 
+  
+    
+      
+        
+          x
+          
+            1
+          
+        
+        +
+        ⋯
+        +
+        
+          x
+          
+            n
+          
+        
+      
+    
+    {\displaystyle x_{1}+\cdots +x_{n}}
+  
+ (utilisation de \ldots et \cdots).
+On peut également utiliser les commandes suivantes qui sont plus précises sur le contexte mathématique :
+
+\dotsc entre virgules : x_{1}, \dotsc, x_{n} donne : 
+  
+    
+      
+        
+          x
+          
+            1
+          
+        
+        ,
+        …
+        ,
+        
+          x
+          
+            n
+          
+        
+      
+    
+    {\displaystyle x_{1},\dotsc ,x_{n}}
+  
+
+\dotsb entre opérateurs binaires : x_{1}+\dotsb+x_{n} donne : 
+  
+    
+      
+        
+          x
+          
+            1
+          
+        
+        +
+        ⋯
+        +
+        
+          x
+          
+            n
+          
+        
+      
+    
+    {\displaystyle x_{1}+\dotsb +x_{n}}
+  
+
+\dotsm pour représenter un produit : x_{1}\dotsm x_{n} donne : 
+  
+    
+      
+        
+          x
+          
+            1
+          
+        
+        ⋯
+        
+          x
+          
+            n
+          
+        
+      
+    
+    {\displaystyle x_{1}\dotsm x_{n}}
+  
+
+\dotsi pour aligner avec une intégrale : \int\dotsi donne : 
+  
+    
+      
+        ∫
+        ⋯
+      
+    
+    {\displaystyle \int \dotsi }
+  
+
+
+==== Usage des accolades ====
+Les accolades peuvent être utilisées même lorsqu'elles ne sont pas nécessaires. Leur usage rend le code source plus lisible et facilite les modifications ultérieures.
+Par exemple, on préférera \frac{1}{2} à \frac 1 2 et surtout à \frac12.
+De même, \sum_{k=1}^{n}{k^{2}} est plus clair que \sum_{k=1}^nk^2. De plus, si l'on doit par exemple modifier la borne supérieure de la somme en n+1, il faudra de toutes façons placer ces accolades. On rencontre cette situation également avec les intégrales.
+
+
+=== Virgule comme séparateur décimal ===
+La virgule est une puce par défaut en LaTeX. Si une virgule doit être affectée comme séparateur décimal, on écrira la virgule entre accolades.
+
+
+=== Aide ===
+Si vous éprouvez des difficultés, n'hésitez pas à demander de l'aide aux utilisateurs TEXniciens ou à vous rendre sur l'atelier TEX.
+
+De manière générale, les indices sont introduits par un tiret bas (_) et les exposants par un accent circonflexe (^).
+Leur placement avec des grands symboles dépend de ceux-ci : ils sont placés verticalement pour les symboles de classe somme et à droite pour les symboles de classe intégrale, dont \int est ici le seul membre.
+Il peut être court-circuité par les commandes suivantes : \limits place indice et exposant verticalement, et \nolimits les place à droite. Dans des matrices, fractions ou dans des tailles textstyle, scriptstyle ou scriptscriptstyle, les symboles se placent par défaut à droite. Plus de détails sont disponibles ci-dessus.
+
+Les commandes suivantes permettent de barrer des éléments de texte dans des formules mathématiques, par exemple lorsque certains éléments s'annulent.
+
+La constante de Néper 
+  
+    
+      
+        
+          e
+        
+      
+    
+    {\displaystyle \mathrm {e} }
+  
+ doit être utilisée en romain, c'est-à-dire avec l'utilisation de \mathrm{e}. Ceci s'applique également pour l'unité imaginaire 
+  
+    
+      
+        
+          i
+        
+      
+    
+    {\displaystyle \mathrm {i} }
+  
+ et le « d droit » 
+  
+    
+      
+        
+          d
+        
+      
+    
+    {\displaystyle \mathrm {d} }
+  
+ des différentielles utilisé notamment dans les intégrales. 
+Ainsi, on écrira \mathrm{e}^{\mathrm{i}\theta} pour afficher 
+  
+    
+      
+        
+          
+            e
+          
+          
+            
+              i
+            
+            θ
+          
+        
+      
+    
+    {\displaystyle \mathrm {e} ^{\mathrm {i} \theta }}
+  
+ et \int_a^b f(t) \, \mathrm{d}t pour afficher 
+  
+    
+      
+        
+          ∫
+          
+            a
+          
+          
+            b
+          
+        
+        f
+        (
+        t
+        )
+        
+        
+          d
+        
+        t
+      
+    
+    {\displaystyle \int _{a}^{b}f(t)\,\mathrm {d} t}
+  
+.
+
+\left et \right peuvent être utilisés avec divers délimiteurs, par exemple :
+
+TeX gère automatiquement la plupart des problèmes d'espacement, mais vous pouvez souhaiter contrôler l'espacement manuellement dans certains cas.
+Il est fortement conseillé d'utiliser le moins possible ces constructions et, en tout état de cause, de ne jamais les utiliser lors de la première mise en forme.
+
+Certaines parties peuvent être mises en couleur, à l'aide du commutateur \color{nom de la couleur} :
+
+{\color{Blue}x^2}+{\color{Brown}2x}-{\color{Green}1} donne
+
+  
+    
+      
+        
+          
+            
+              x
+              
+                2
+              
+            
+          
+        
+        +
+        
+          
+            2
+            x
+          
+        
+        −
+        
+          
+            1
+          
+        
+      
+    
+    {\displaystyle {\color {Blue}x^{2}}+{\color {Brown}2x}-{\color {Green}1}}
+  
+
+x=\frac{-b\pm\sqrt{\color{Red}{b^2-4ac}}}{2a} donne
+
+  
+    
+      
+        x
+        =
+        
+          
+            
+              −
+              b
+              ±
+              
+                
+                  
+                    
+                      
+                        b
+                        
+                          2
+                        
+                      
+                      −
+                      4
+                      a
+                      c
+                    
+                  
+                
+              
+            
+            
+              2
+              a
+            
+          
+        
+      
+    
+    {\displaystyle x={\frac {-b\pm {\sqrt {\color {Red}{b^{2}-4ac}}}}{2a}}}
+  
+
+Voir sur Wikipédia en anglais (en) pour les 68 couleurs disponibles.
+
+
+=== Liens internes ===
+Wikipédia:Atelier TeX, où vous posez directement des questions sur l’utilisation du TeX.
+Catégorie:Utilisateur TeXnicien
+Exemples de formules
+Aide:Caractères spéciaux
+TeX et LaTeX
+
+
+=== Liens externes ===
+(en) [PDF] User’s Guide for the amsmath Package ( Guide de l'utilisateur de l'extension amsmath)"

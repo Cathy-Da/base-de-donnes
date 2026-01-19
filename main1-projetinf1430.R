@@ -1,0 +1,17 @@
+# Premier main à partir pour avoir base de données.
+
+source("Packages-projetInf1430.R")
+source("Fonctions1.R")
+source("wikipedia.R")
+source("Textes-informatique.R")
+source("Textes-historique.R")
+source("Textes-mathématique.R")
+source("Textes-philosophiques.R")
+source("Textes-tableaux.R")
+source("Encodage.R")
+source("Encodage_bin.R")
+source("Compression.R")
+source("Compression_bin.R")
+source("Decompression.R")
+source("Decompression_bin.R")
+source("Verification_fichier_corrompu.R")
