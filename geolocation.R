@@ -9,32 +9,32 @@ Pause_erreur <-2
 Pause_lots<-1
 
 coordonnée_geolocation <-function(lat, long) {
-ifelse(is.na(lat) | is.na(long), NA, sprintf("%.6f, %.6f", lat, long))
+  ifelse(is.na(lat) | is.na(long), NA, sprintf("%.6f, %.6f", lat, long))
 }
 
 geolocation_arcgis <-function(vecteur_adresses, Nb_tentatives, pause_erreur) 
 {
-resultat <-NULL
+  resultat <-NULL
   
-for (tentative in seq_len(Nb_tentatives)) {
-essai <-try(
-geo(address= vecteur_adresses, method= "arcgis", limit= 1, quiet= TRUE),silent= TRUE)
+  for (tentative in seq_len(Nb_tentatives)) {
+    essai <-try(
+      geo(address= vecteur_adresses, method= "arcgis", limit= 1, quiet= TRUE),silent= TRUE)
     
-# Si pas d'erreur
-if (!inherits(essai,"try-error") && !is.null(essai)) 
-{
-resultat <-essai
-break
-}
-Sys.sleep(pause_erreur)
-}
+    # Si pas d'erreur
+    if (!inherits(essai,"try-error") && !is.null(essai)) 
+    {
+      resultat <-essai
+      break
+    }
+    Sys.sleep(pause_erreur)
+  }
   
-# Si échoue
-if (is.null(resultat)) 
-{
-return(data.frame(address =vecteur_adresses,lat =NA_real_,long =NA_real_))
-}
-return(resultat)
+  # Si échoue
+  if (is.null(resultat)) 
+  {
+    return(data.frame(address =vecteur_adresses,lat =NA_real_,long =NA_real_))
+  }
+  return(resultat)
 }
 
 base_de_données <-read.csv(entrée, check.names= FALSE,fileEncoding="UTF-8")
@@ -44,28 +44,35 @@ colonnes_manquantes <-setdiff(colonnes_requises, names(base_de_données))
 
 if (length(colonnes_manquantes)) 
 {
-stop("Colonnes manquantes: ", paste(colonnes_manquantes, collapse =","))
+  stop("Colonnes manquantes: ", paste(colonnes_manquantes, collapse =","))
 }
 
 corriger_regions <-function(valeur) {
   
-# NWPF et FATA pour Khyber Pakhtunkhwa
-valeur <-gsub("(?i)\\bN\\.?\\s*W\\.?\\s*F\\.?\\s*P\\.?\\b","Khyber Pakhtunkhwa", valeur, perl=TRUE)
-valeur <-gsub("(?i)\\bF\\.?\\s*A\\.?\\s*T\\.?\\s*A\\.?\\b","Khyber Pakhtunkhwa", valeur, perl=TRUE)
+  # NWPF et FATA pour Khyber Pakhtunkhwa
+  valeur <-gsub("(?i)\\bN\\.?\\s*W\\.?\\s*F\\.?\\s*P\\.?\\b","Khyber Pakhtunkhwa", valeur, perl=TRUE)
+  valeur <-gsub("(?i)\\bF\\.?\\s*A\\.?\\s*T\\.?\\s*A\\.?\\b","Khyber Pakhtunkhwa", valeur, perl=TRUE)
   
-# Villes des Philippines
-valeur <-gsub("(?i)^viii$","Eastern Visayas", valeur)
-valeur <-gsub("(?i)^occ mindoro$","Occidental Mindoro", valeur)
-valeur <-gsub("(?i)^and bislig$","bislig", valeur)
-valeur
+  # Villes des Philippines
+  valeur <-gsub("(?i)^viii$","Eastern Visayas", valeur)
+  valeur <-gsub("(?i)^occ mindoro$","Occidental Mindoro", valeur)
+  valeur <-gsub("(?i)^and bislig$","bislig", valeur)
+  valeur
 }
 
 # corriger
 base_de_données$adm1 <-corriger_regions(base_de_données$adm1)
 base_de_données$location <-corriger_regions(base_de_données$location)
 
-adresses_completes <-nettoyer_adresse
-(paste(base_de_données$location, base_de_données$adm1, base_de_données$country, sep = ","))
+nettoyer_adresse <-function(adresse) {
+  adresse <-trimws(adresse)
+  adresse <-gsub("\\s+", " ", adresse)
+  adresse <-gsub(",+", ",", adresse)
+  adresse <-gsub("^,|,$", "", adresse)
+  adresse
+}
+
+adresses_completes <-nettoyer_adresse(paste(base_de_données$location, base_de_données$adm1, base_de_données$country, sep = ","))
 
 adresses_uniques <-unique(adresses_completes)
 nb_total <-length(adresses_uniques)
@@ -77,14 +84,14 @@ options(timeout= max(500,ancien_timeout))
 
 for (i in seq_len(nb_lots)) 
 {
-debut <-(i-1)*Taille_lot + 1
-fin <-min(i*Taille_lot, nb_total)
+  debut <-(i-1)*Taille_lot + 1
+  fin <-min(i*Taille_lot, nb_total)
   
-cat(sprintf("Lot %d/%d: de %d à %d\n", i, nb_lots, debut, fin))
+  cat(sprintf("Lot %d/%d: de %d à %d\n", i, nb_lots, debut, fin))
   
-vecteur <-adresses_uniques[debut:fin]
-resultats_lots[[i]] <-geolocation_arcgis(vecteur, Nb_tentatives, Pause_erreur)
-Sys.sleep(Pause_lots)
+  vecteur <-adresses_uniques[debut:fin]
+  resultats_lots[[i]] <-geolocation_arcgis(vecteur, Nb_tentatives, Pause_erreur)
+  Sys.sleep(Pause_lots)
 }
 
 options(timeout= ancien_timeout)
@@ -101,4 +108,3 @@ nb_vide <-sum(is.na(base_de_données$geolocation))
 
 cat("Coordonnées trouvées:", nb_coordonnees, "\n")
 cat("Coordonnées manquantes:", nb_vide, "\n")
-
